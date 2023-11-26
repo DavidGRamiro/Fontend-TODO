@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, type OnInit } from '@angular/core';
+import { UsuarioService } from '../../../services/usuario.service';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,7 @@ import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 })
 export default class HomeComponent implements OnInit {
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
+
 
 }

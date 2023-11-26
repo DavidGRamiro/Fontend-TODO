@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, type OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { UsuarioService } from '../services/usuario.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,5 +15,6 @@ import { RouterModule } from '@angular/router';
 export default class DashboardComponent implements OnInit {
 
   ngOnInit(): void { }
+
 
 }
