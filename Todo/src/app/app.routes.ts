@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import path from 'path';
 
 export const routes: Routes = [
 
@@ -16,7 +15,13 @@ export const routes: Routes = [
       { path: 'admin', title: "Administrador", loadComponent: () => import('./dashboard/pages/admin/admin.component') },
       { path: '', redirectTo: 'login', pathMatch: 'full' }
     ]
-
+  },
+  {
+    path: 'usuarios',
+    loadComponent: () => import('./usuarios/usuarios.component'),
+    children : [
+      { path: 'perfil', title: 'Perfil', loadComponent: () => import('./usuarios/pages/perfil/perfil.component')},
+    ]
   },
   {
     path: '',
