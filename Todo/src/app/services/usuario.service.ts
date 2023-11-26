@@ -22,6 +22,11 @@ export class UsuarioService {
     return this._http.get<any[]>(url)
   }
 
+  altaUsuario( data : any): Observable<any>{
+    let url = this._url + this._comun
+    return this._http.post(url, data)
+  }
+
   // Obtener todos los roles de usuario
   getRoles():Observable<any>{
     let url = this._url + this._comun_rol

@@ -16,7 +16,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideAnimations(),
     importProvidersFrom(
-      HttpClientModule
-    )
+      HttpClientModule,
+    ),
+
   ]
 };
