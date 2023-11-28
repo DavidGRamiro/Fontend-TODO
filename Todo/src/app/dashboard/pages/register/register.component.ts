@@ -24,13 +24,12 @@ export default class RegisterComponent {
     password : new FormControl(''),
   });
 
-
+  // Una vez que el usuario se ha logueado lo mandamos al login
   registroUsuario(){
     if(this.registroForm.valid){
       let new_user = this.registroForm.value;
       this._usuarioService.altaUsuario(new_user).subscribe({
         next: (data) => {
-          console.log(data)
           this._router.navigate(['/dashboard/login'])
         },
         error : (err) => {

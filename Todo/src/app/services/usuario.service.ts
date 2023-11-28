@@ -33,4 +33,9 @@ export class UsuarioService {
     return this._http.get(url)
   }
 
+  login( usuario : any):Observable<any>{
+    let url = this._url + this._comun + 'login/'
+    return this._http.post(url, usuario)
+  }
+
 }
