@@ -35,17 +35,12 @@ export default class RegisterComponent {
       let new_user = this.registroForm.value;
       this._usuarioService.altaUsuario(new_user).subscribe({
         next: (data) => {
-          console.log(data)
-
+          // TODO: Redirigir a su panel de usuario
           if(data.cod === 200){
-            // this._router.navigate(['/dashboard/login'])
+            this._router.navigate(['/dashboard/login'])
           }else{
-            this._messageService.add({ severity: 'error', detail: "", summary: data.resultado })
+            this._messageService.add({ severity: 'error', detail: "", summary: data.resultado})
           }
-
-
-
-
         },
         error : (err) => {
           console.log(err)
