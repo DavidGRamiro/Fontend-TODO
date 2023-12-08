@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable,  computed,  inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API } from '../shared/enums/api';
@@ -38,5 +38,17 @@ export class UsuarioService {
     let url = this._url + this._comun + 'login/'
     return this._http.post(url, usuario)
   }
+
+  // Obtener la información del token del usuario
+  getInfoToken( token : any):Observable<any>{
+    let url = this._url +  this._comun + 'auth/'
+    const headers = new HttpHeaders({'Authorization': `Token ${token}`})
+    return this._http.get<any>( url, { headers})
+  }
+
+
+
+
+
 
 }

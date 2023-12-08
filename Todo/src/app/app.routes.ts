@@ -14,7 +14,7 @@ export const routes: Routes = [
       { path: 'registro', title: "Registro", loadComponent: () => import('./dashboard/pages/register/register.component') },
       { path: 'logout', title: 'Logout', loadComponent:() => import('./dashboard/pages/logout/logout.component') },
       { path: 'admin', title: "Administrador", loadComponent: () => import('./dashboard/pages/admin/admin.component') },
-      { path: '', redirectTo: 'login', pathMatch: 'full' }
+      { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
   {
@@ -25,8 +25,8 @@ export const routes: Routes = [
     ]
   },
   {
-    path: '',
-    redirectTo: '/home',
+    path: '*',
+    redirectTo: 'home',
     pathMatch: 'full'
   }
 ];
