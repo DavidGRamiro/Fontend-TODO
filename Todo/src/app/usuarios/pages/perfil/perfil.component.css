@@ -1,0 +1,18 @@
+
+
+.button-config{
+  display: flex;
+  float: right;
+  margin: 40px;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-config .p-button .p-button-icon{
+  font-size: 40px;
+}
+
+.tooltip{
+  width: 20px;
+  height: 10px;
+}

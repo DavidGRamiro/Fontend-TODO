@@ -1,0 +1,44 @@
+
+
+<div class="container">
+
+  <form [formGroup]="formData" (ngSubmit)="actualizarDatos()">
+    <div>
+      <!-- Nombre del usuario -->
+      <span class="p-float-label mb-4 mt-4">
+        <input pInputText id="name" formControlName="name" [(ngModel)]="user.name" required="true"/>
+        <label for="name">Nombre</label>
+      </span>
+      <!-- Nombre de username -->
+      <span class="p-float-label mb-4">
+        <input pInputText id="username" formControlName="username" [(ngModel)]="user.username" required="true"/>
+        <label for="username">Nombre de usuario</label>
+      </span>
+      <!-- Email -->
+      <span class="p-float-label mb-4">
+        <input pInputText id="email" formControlName="email" [(ngModel)]="user.email" required="true"/>
+        <label for="email">Correo eléctrónico</label>
+      </span>
+      <!-- Contraseña -->
+      <span class="p-float-label mb-4">
+        <input pInputText type="password" [disabled]="true" [value]="user.password" />
+        <label for="username">Contraseña</label>
+      </span>
+      <!-- Cambiar contraseña -->
+      <span class="p-float-label mb-4">
+        <input pInputText id="new_password" formControlName="password_nueva"/>
+        <label for="username">Nueva contraseña</label>
+      </span>
+      <!-- C onfirmar contraseña -->
+      <span class="p-float-label mb-4">
+        <input pInputText id="confirmar_contraseña" formControlName="password_confirmacion" required="true"/>
+        <label for="Confrimar contraseña">Confirmar contraseña</label>
+      </span>
+    </div>
+    <div class="flex flex-row-reverse">
+      <button pButton pRipple label="Guardar cambios" class="p-button-success" type="submmit"></button>
+    </div>
+  </form>
+</div>
+
+<p-toast></p-toast>

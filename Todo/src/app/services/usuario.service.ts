@@ -46,6 +46,12 @@ export class UsuarioService {
     return this._http.get<any>( url, { headers})
   }
 
+  // Actualización de los datos de un usuario
+  updateUsuario( usuario : any) : Observable<any>{
+    let url = this._url + this._comun + usuario.id + '/'
+    return this._http.put<any>(url, usuario)
+  }
+
 
 
 
