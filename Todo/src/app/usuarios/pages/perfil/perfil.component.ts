@@ -1,13 +1,22 @@
 import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
-import { SidebarModule } from 'primeng/sidebar';
+import { CommonModule, NumberFormatStyle, isPlatformBrowser } from '@angular/common';
 import { UsuarioService } from '../../../services/usuario.service';
+import { SidebarModule } from 'primeng/sidebar';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+import { MenuItem } from 'primeng/api';
+import { MenuModule } from 'primeng/menu';
+import InfoPerfilComponent from './dashboard/info-perfil/info-perfil.component';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule, SidebarModule],
+  imports: [CommonModule, SidebarModule, ButtonModule, TooltipModule,
+            MenuModule, DialogModule, InputTextModule,
+            InfoPerfilComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.sass'
 })
@@ -17,13 +26,22 @@ export default class PerfilComponent implements OnInit{
   public usuario_loguado : any = null;
   private userService = inject(UsuarioService)
 
+  // Control de estado
+  public sidebarVisible: boolean = false;
+  public bActualizarDatos : boolean = false;
+  public bModalVisible : boolean = false
+
+  // Definición del menú
+  items: MenuItem[] | undefined;
+
   constructor(@Inject(PLATFORM_ID) private platformId: Object){}
 
   ngOnInit(): void {
-    this.obtenerToken()
+    this.obtenerToken();
+    this.cargarMenuDashboard();
   }
 
-
+  // Método para obtener el token de localstore y recuperación del usuario
   obtenerToken(){
     if (isPlatformBrowser(this.platformId)) {
       let tokenJson : any = localStorage.getItem('token')
@@ -36,7 +54,6 @@ export default class PerfilComponent implements OnInit{
 
   // A traves del token, recuperamos los datos del usuario
   obtenerDataUser( token : any){
-
     this.userService.getInfoToken(token).subscribe({
       next : (data) => {
         if(data){
@@ -49,6 +66,42 @@ export default class PerfilComponent implements OnInit{
       }
     })
   }
+
+  // Cargamos el menu de dashboard del usuario
+  cargarMenuDashboard(){
+    this.items = [
+      { label: 'Datos personales',
+        items: [
+          { label: 'Actualizar datos',  icon: 'pi pi-pencil',
+            command: () => {
+            this.actualizarDatos()}
+          },
+          { label: 'Cambiar avatar', icon: 'pi pi-user'},
+          { label: 'Subscripción', icon: 'pi pi-cart-plus'},
+          { label: 'Eliminar cuenta', icon: 'pi pi-trash'},
+        ]
+      },
+      { label: 'Tareas',
+        items: [
+        { label: 'Todas las tareas', icon: 'pi pi-pencil' },
+        { label: 'Tareas activas', icon: 'pi pi-user'},
+        { label: 'Tareas pendientes', icon: 'pi pi-trash'},
+        { label: 'Tareas completadas', icon: 'pi pi-cart-plus'},
+        ]
+      }
+    ]
+  }
+
+  // Abre el modal para actulizar los datos del usuario
+  actualizarDatos(){
+    this.bModalVisible = true
+    this.bActualizarDatos = true
+  }
+
+  getEmitter(event : any){
+    this.bModalVisible = false
+  }
+
 
 
 }

@@ -1,1 +1,24 @@
-<h1>Perfil works</h1>
+
+<div>
+  <p-sidebar [(visible)]="sidebarVisible">
+    <p-menu [model]="items"></p-menu>
+  </p-sidebar>
+</div>
+
+<!-- Abre el modal de el panel de usuario -->
+<div class="button-config">
+  <i class="pi pi-cog" style="font-size: 1.5rem" (click)="sidebarVisible = true"></i>
+</div>
+
+<p-dialog header="header" [(visible)]="bModalVisible" [style]="{ width: '50vw' }">
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">Actualizar datos personales</span>
+  </ng-template>
+
+  @if(bActualizarDatos){
+    <app-info-perfil [usuarioLogueado]="usuario_loguado" (eventRes)="getEmitter($event)"></app-info-perfil>
+  }
+</p-dialog>
+
+
+

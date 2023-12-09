@@ -1,17 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import {  MessageService } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule, RouterOutlet, ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [MessageService]
 
 })
-export class AppComponent {
-  title = 'Todo';
+
+export class AppComponent implements OnInit {
+
+  constructor(private _primengConfig : PrimeNGConfig){}
+
+
+  ngOnInit(): void {
+    this._primengConfig.ripple = true;
+  }
+
 }
