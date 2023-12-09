@@ -4,7 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { MessageService } from 'primeng/api';
-import { UsuarioService } from '../../../../../services/usuario.service';
+import { UsuarioService } from '../../../../services/usuario.service';
 import { ToastModule } from 'primeng/toast';
 
 

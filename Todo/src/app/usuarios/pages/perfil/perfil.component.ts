@@ -1,22 +1,19 @@
 import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { CommonModule, NumberFormatStyle, isPlatformBrowser } from '@angular/common';
 import { UsuarioService } from '../../../services/usuario.service';
-import { SidebarModule } from 'primeng/sidebar';
-import { ButtonModule } from 'primeng/button';
-import { TooltipModule } from 'primeng/tooltip';
 import { MenuItem } from 'primeng/api';
-import { MenuModule } from 'primeng/menu';
-import InfoPerfilComponent from './dashboard/info-perfil/info-perfil.component';
-import { DialogModule } from 'primeng/dialog';
-import { InputTextModule } from 'primeng/inputtext';
+import InfoPerfilComponent from './info-perfil/info-perfil.component';
+import GridTareasComponent from '../../../tareas/grid-tareas/grid-tareas.component';
+import TareasFormComponent from '../../../tareas/tareas-form/tareas-form.component';
+import SucripcionComponent from '../subscripcion/subscripcion.component';
+import SubscripcionComponent from '../subscripcion/subscripcion.component';
 
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule, SidebarModule, ButtonModule, TooltipModule,
-            MenuModule, DialogModule, InputTextModule,
-            InfoPerfilComponent],
+  imports: [CommonModule, GridTareasComponent, TareasFormComponent,
+            InfoPerfilComponent, SubscripcionComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.sass'
 })
@@ -30,6 +27,8 @@ export default class PerfilComponent implements OnInit{
   public sidebarVisible: boolean = false;
   public bActualizarDatos : boolean = false;
   public bModalVisible : boolean = false
+  public bMostrarGrid : boolean = false;
+  public bMostrarSub : boolean = false
 
   // Definición del menú
   items: MenuItem[] | undefined;
@@ -38,7 +37,7 @@ export default class PerfilComponent implements OnInit{
 
   ngOnInit(): void {
     this.obtenerToken();
-    this.cargarMenuDashboard();
+    // this.cargarMenuDashboard();
   }
 
   // Método para obtener el token de localstore y recuperación del usuario
@@ -67,40 +66,61 @@ export default class PerfilComponent implements OnInit{
     })
   }
 
-  // Cargamos el menu de dashboard del usuario
-  cargarMenuDashboard(){
-    this.items = [
-      { label: 'Datos personales',
-        items: [
-          { label: 'Actualizar datos',  icon: 'pi pi-pencil',
-            command: () => {
-            this.actualizarDatos()}
-          },
-          { label: 'Cambiar avatar', icon: 'pi pi-user'},
-          { label: 'Subscripción', icon: 'pi pi-cart-plus'},
-          { label: 'Eliminar cuenta', icon: 'pi pi-trash'},
-        ]
-      },
-      { label: 'Tareas',
-        items: [
-        { label: 'Todas las tareas', icon: 'pi pi-pencil' },
-        { label: 'Tareas activas', icon: 'pi pi-user'},
-        { label: 'Tareas pendientes', icon: 'pi pi-trash'},
-        { label: 'Tareas completadas', icon: 'pi pi-cart-plus'},
-        ]
-      }
-    ]
+  mostrarGridTaks(){
+    this.bActualizarDatos = false
+    this.bMostrarSub = false
+    this.bMostrarGrid = true
   }
 
-  // Abre el modal para actulizar los datos del usuario
-  actualizarDatos(){
-    this.bModalVisible = true
+  editarUsuario(){
+    this.bMostrarGrid = false
+    this.bMostrarSub = false
     this.bActualizarDatos = true
   }
 
-  getEmitter(event : any){
-    this.bModalVisible = false
+  mostrarSub(){
+    this.bActualizarDatos = false
+    this.bMostrarGrid = false
+    this.bMostrarSub = true
+
   }
+
+
+
+  // Cargamos el menu de dashboard del usuario
+  // cargarMenuDashboard(){
+  //   this.items = [
+  //     { label: 'Datos personales',
+  //       items: [
+  //         { label: 'Actualizar datos',  icon: 'pi pi-pencil',
+  //           command: () => {
+  //           this.actualizarDatos()}
+  //         },
+  //         { label: 'Cambiar avatar', icon: 'pi pi-user'},
+  //         { label: 'Subscripción', icon: 'pi pi-cart-plus'},
+  //         { label: 'Eliminar cuenta', icon: 'pi pi-trash'},
+  //       ]
+  //     },
+  //     { label: 'Tareas',
+  //       items: [
+  //       { label: 'Todas las tareas', icon: 'pi pi-pencil' },
+  //       { label: 'Tareas activas', icon: 'pi pi-user'},
+  //       { label: 'Tareas pendientes', icon: 'pi pi-trash'},
+  //       { label: 'Tareas completadas', icon: 'pi pi-cart-plus'},
+  //       ]
+  //     }
+  //   ]
+  // }
+
+  // Abre el modal para actulizar los datos del usuario
+  // actualizarDatos(){
+  //   this.bModalVisible = true
+  //   this.bActualizarDatos = true
+  // }
+
+  // getEmitter(event : any){
+  //   this.bModalVisible = false
+  // }
 
 
 
