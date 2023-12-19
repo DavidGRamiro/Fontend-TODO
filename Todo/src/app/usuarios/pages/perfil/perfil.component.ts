@@ -85,6 +85,17 @@ export default class PerfilComponent implements OnInit{
 
   }
 
+  logout(){
+    this.userService.logout( this.token_usuario).subscribe({
+      next : (data) => {
+        console.log(data)
+      },
+      error : (err) => {
+        console.log(err)
+      }
+    })
+  }
+
 
 
   // Cargamos el menu de dashboard del usuario

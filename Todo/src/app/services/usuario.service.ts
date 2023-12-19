@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable,  computed,  inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API } from '../shared/enums/api';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,16 @@ import { API } from '../shared/enums/api';
 export class UsuarioService {
 
   private _http = inject( HttpClient)
+  private _tokenService = inject(TokenService)
+  private _token = 'Token '
+
+  constructor(){
+    // let userdata = localStorage.getItem('token')
+    // if(userdata){
+    //   this._token += JSON.parse(userdata)
+    //   console.log('token', this._token)
+    // }
+  }
 
   private _url = API.URL_API
   private _comun = API.USERS
@@ -50,6 +61,15 @@ export class UsuarioService {
   updateUsuario( usuario : any) : Observable<any>{
     let url = this._url + this._comun + usuario.id + '/'
     return this._http.put<any>(url, usuario)
+  }
+
+  // Logout del usuario
+  logout( user_token : string ) : Observable<any>{
+    let url = this._url + this._comun + 'logout/'
+    // let header = new HttpHeaders().set('Content-Type', 'application/json')
+    //                               .set('Authorization', this._token)
+
+    return this._http.get<any>(url)
   }
 
 
