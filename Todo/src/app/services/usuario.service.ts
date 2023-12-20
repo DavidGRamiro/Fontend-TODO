@@ -11,16 +11,8 @@ import { TokenService } from './token.service';
 export class UsuarioService {
 
   private _http = inject( HttpClient)
-  private _tokenService = inject(TokenService)
-  private _token = 'Token '
 
-  constructor(){
-    // let userdata = localStorage.getItem('token')
-    // if(userdata){
-    //   this._token += JSON.parse(userdata)
-    //   console.log('token', this._token)
-    // }
-  }
+  constructor(){}
 
   private _url = API.URL_API
   private _comun = API.USERS
@@ -64,17 +56,10 @@ export class UsuarioService {
   }
 
   // Logout del usuario
-  logout( user_token : string ) : Observable<any>{
+  logout() : Observable<any>{
     let url = this._url + this._comun + 'logout/'
-    // let header = new HttpHeaders().set('Content-Type', 'application/json')
-    //                               .set('Authorization', this._token)
-
     return this._http.get<any>(url)
   }
-
-
-
-
 
 
 }

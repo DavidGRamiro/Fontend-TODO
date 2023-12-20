@@ -31,8 +31,10 @@ export default class RegisterComponent {
 
   // Una vez que el usuario se ha registrado lo mandamos al login
   registroUsuario(){
+
     if(this.registroForm.valid){
       let new_user = this.registroForm.value;
+
       this._usuarioService.altaUsuario(new_user).subscribe({
         next: (data) => {
           // TODO: Redirigir a su panel de usuario

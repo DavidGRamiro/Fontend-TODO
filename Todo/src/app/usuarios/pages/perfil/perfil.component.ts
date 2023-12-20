@@ -86,7 +86,7 @@ export default class PerfilComponent implements OnInit{
   }
 
   logout(){
-    this.userService.logout( this.token_usuario).subscribe({
+    this.userService.logout().subscribe({
       next : (data) => {
         console.log(data)
       },
@@ -95,44 +95,4 @@ export default class PerfilComponent implements OnInit{
       }
     })
   }
-
-
-
-  // Cargamos el menu de dashboard del usuario
-  // cargarMenuDashboard(){
-  //   this.items = [
-  //     { label: 'Datos personales',
-  //       items: [
-  //         { label: 'Actualizar datos',  icon: 'pi pi-pencil',
-  //           command: () => {
-  //           this.actualizarDatos()}
-  //         },
-  //         { label: 'Cambiar avatar', icon: 'pi pi-user'},
-  //         { label: 'Subscripción', icon: 'pi pi-cart-plus'},
-  //         { label: 'Eliminar cuenta', icon: 'pi pi-trash'},
-  //       ]
-  //     },
-  //     { label: 'Tareas',
-  //       items: [
-  //       { label: 'Todas las tareas', icon: 'pi pi-pencil' },
-  //       { label: 'Tareas activas', icon: 'pi pi-user'},
-  //       { label: 'Tareas pendientes', icon: 'pi pi-trash'},
-  //       { label: 'Tareas completadas', icon: 'pi pi-cart-plus'},
-  //       ]
-  //     }
-  //   ]
-  // }
-
-  // Abre el modal para actulizar los datos del usuario
-  // actualizarDatos(){
-  //   this.bModalVisible = true
-  //   this.bActualizarDatos = true
-  // }
-
-  // getEmitter(event : any){
-  //   this.bModalVisible = false
-  // }
-
-
-
 }
