@@ -1,0 +1,19 @@
+
+
+.center-horizontally {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container{
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  margin-left: 70px;
+}
+
+.crud-buttons{
+  display: flex;
+  justify-content: end;
+  margin: 20px;
+}

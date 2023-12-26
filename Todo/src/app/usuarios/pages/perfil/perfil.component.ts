@@ -1,26 +1,26 @@
-import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewChild, inject } from '@angular/core';
 import { CommonModule, NumberFormatStyle, isPlatformBrowser } from '@angular/common';
 import { UsuarioService } from '../../../services/usuario.service';
-import { SidebarModule } from 'primeng/sidebar';
-import { ButtonModule } from 'primeng/button';
-import { TooltipModule } from 'primeng/tooltip';
-import { MenuItem } from 'primeng/api';
-import { MenuModule } from 'primeng/menu';
-import InfoPerfilComponent from './dashboard/info-perfil/info-perfil.component';
-import { DialogModule } from 'primeng/dialog';
-import { InputTextModule } from 'primeng/inputtext';
+import { MenuItem, MessageService } from 'primeng/api';
+import InfoPerfilComponent from './info-perfil/info-perfil.component';
+import GridTareasComponent from '../../../tareas/grid-tareas/grid-tareas.component';
+import TareasFormComponent from '../../../tareas/tareas-form/tareas-form.component';
+import SubscripcionComponent from '../subscripcion/subscripcion.component';
+import { Router } from '@angular/router';
+import TareasComponent from '../../../tareas/tareas.component';
 
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [CommonModule, SidebarModule, ButtonModule, TooltipModule,
-            MenuModule, DialogModule, InputTextModule,
-            InfoPerfilComponent],
+  imports: [CommonModule, GridTareasComponent, TareasFormComponent,
+            InfoPerfilComponent, SubscripcionComponent, TareasComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.sass'
 })
 export default class PerfilComponent implements OnInit{
+
+  @ViewChild('tareas') tareas : TareasComponent = new TareasComponent()
 
   public token_usuario : string = ''
   public usuario_loguado : any = null;
@@ -30,15 +30,18 @@ export default class PerfilComponent implements OnInit{
   public sidebarVisible: boolean = false;
   public bActualizarDatos : boolean = false;
   public bModalVisible : boolean = false
+  public bMostrarGrid : boolean = false;
+  public bMostrarSub : boolean = false
 
   // Definición del menú
   items: MenuItem[] | undefined;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object){}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object ,
+              private _msgService: MessageService,
+              private _router : Router){}
 
   ngOnInit(): void {
     this.obtenerToken();
-    this.cargarMenuDashboard();
   }
 
   // Método para obtener el token de localstore y recuperación del usuario
@@ -58,50 +61,49 @@ export default class PerfilComponent implements OnInit{
       next : (data) => {
         if(data){
           this.usuario_loguado = data.data;
-          console.log(this.usuario_loguado)
         }
       },
       error: (err) => {
-        console.log(err)
+        this._msgService.add({ severity: 'error', detail: '', summary: 'No se han podido recuperar los datos del usuario' })
       }
     })
   }
 
-  // Cargamos el menu de dashboard del usuario
-  cargarMenuDashboard(){
-    this.items = [
-      { label: 'Datos personales',
-        items: [
-          { label: 'Actualizar datos',  icon: 'pi pi-pencil',
-            command: () => {
-            this.actualizarDatos()}
-          },
-          { label: 'Cambiar avatar', icon: 'pi pi-user'},
-          { label: 'Subscripción', icon: 'pi pi-cart-plus'},
-          { label: 'Eliminar cuenta', icon: 'pi pi-trash'},
-        ]
+   // Método para cerrar sesión y eliminar el token
+   logout(){
+    this.userService.logout().subscribe({
+      next : (data) => {
+
+        setTimeout(() => {
+          this._msgService.add({ severity: 'success', detail: '', summary:'Sesión cerrada' })
+          this._router.navigate(['/login'])
+        },1000)
       },
-      { label: 'Tareas',
-        items: [
-        { label: 'Todas las tareas', icon: 'pi pi-pencil' },
-        { label: 'Tareas activas', icon: 'pi pi-user'},
-        { label: 'Tareas pendientes', icon: 'pi pi-trash'},
-        { label: 'Tareas completadas', icon: 'pi pi-cart-plus'},
-        ]
+      error : (err) => {
+        this._msgService.add({ severity: 'error', detail: 'Ha ocurrido un error', summary: err.message })
       }
-    ]
+    })
   }
 
-  // Abre el modal para actulizar los datos del usuario
-  actualizarDatos(){
-    this.bModalVisible = true
+  // Control entre pestañas
+  mostrarGridTaks(){
+    this.bActualizarDatos = false
+    this.bMostrarSub = false
+    this.bMostrarGrid = true
+  }
+
+  // Control entre pestañas
+  editarUsuario(){
+    this.bMostrarGrid = false
+    this.bMostrarSub = false
     this.bActualizarDatos = true
   }
 
-  getEmitter(event : any){
-    this.bModalVisible = false
+  // Control entre pestañas
+  mostrarSub(){
+    this.bActualizarDatos = false
+    this.bMostrarGrid = false
+    this.bMostrarSub = true
+
   }
-
-
-
 }

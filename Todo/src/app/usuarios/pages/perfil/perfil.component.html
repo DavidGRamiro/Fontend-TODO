@@ -1,24 +1,115 @@
 
-<div>
-  <p-sidebar [(visible)]="sidebarVisible">
-    <p-menu [model]="items"></p-menu>
-  </p-sidebar>
-</div>
+<div class="flex h-screen overflow hidden">
+  <div class="flex flex-col w-28 bg-dark">
+    <div class="flex flex-col h-full justify-between">
+        <ul class="lista flex flex-col mt-6 space-y-3">
+          <li>
+            <!-- Item pencil para mostrar el dashboard de todas las tareas-->
+            <a (click)="mostrarGridTaks()"  class="text-white-500 hover:bg-dark-50 hover:text-yellow-700 ">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5 cursor-pointer">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+              </svg>
+            </a>
+          </li>
+          <!-- Item monedero para cambios de suscripción -->
+          <li>
+            <a (click)="mostrarSub()" class=" text-white-500 hover:bg-dark-50 hover:text-purple-700">
+              <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 opacity-75"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+              </svg>
+              <span class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100"></span>
+            </a>
+          </li>
+          <!-- Item en construcción, asociado a calculadora del menú Añadir href -> a -->
+          <li>
+            <a  class="text-white-500 hover:bg-dark-50 hover:text-purple-700">
+              <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 opacity-75"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2" >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+              </svg>
+              <span class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100"></span>
+            </a>
+          </li>
+          <!-- Item editar datos de usuario -->
+          <li>
+            <a (click)="editarUsuario()"class="text-white-500 hover:bg-dark-50 hover:text-purple-700">
+              <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 opacity-75 cursor-pointer"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2" >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+              <span class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
+                Account
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
 
-<!-- Abre el modal de el panel de usuario -->
-<div class="button-config">
-  <i class="pi pi-cog" style="font-size: 1.5rem" (click)="sidebarVisible = true"></i>
-</div>
+      <!-- CERRRAR SESIÓN -->
+      <div class="border-t border-red-100 bg-dark p-2">
+        <form action="">
+          <button
+            (click)="logout()"
+            class="w-full rounded-lg py-1.5 text-sm text-red-500 hover:bg-black-50 hover:text-red-700">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5 opacity-75"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
+            </svg>
+            <span class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100"></span>
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="flex-1 overflow-hidden">
+      <!-- Control de muestra de los diferentes componentes del menú -->
 
-<p-dialog header="header" [(visible)]="bModalVisible" [style]="{ width: '50vw' }">
-  <ng-template pTemplate="header">
-    <span class="text-xl font-bold">Actualizar datos personales</span>
-  </ng-template>
-
-  @if(bActualizarDatos){
-    <app-info-perfil [usuarioLogueado]="usuario_loguado" (eventRes)="getEmitter($event)"></app-info-perfil>
-  }
-</p-dialog>
-
+      @if( bMostrarGrid){
+        <!-- Mostrar el grid de todas las tareas que tiene -->
+        <app-tareas></app-tareas>
+      }
+      @else if(bActualizarDatos){
+        <!-- Mostar el panel de actualización de datos personales de usuario -->
+        <app-info-perfil></app-info-perfil>
+      }
+      @else if (bMostrarSub) {
+        <!-- Mostrar componente de cambio de suscripción  -->
+        <app-sucripcion></app-sucripcion>
+      }
+    </div>
+  </div>
 
 

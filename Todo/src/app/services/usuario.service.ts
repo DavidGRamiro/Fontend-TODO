@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable,  computed,  inject, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API } from '../shared/enums/api';
+import { TokenService } from './token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,8 @@ import { API } from '../shared/enums/api';
 export class UsuarioService {
 
   private _http = inject( HttpClient)
+
+  constructor(){}
 
   private _url = API.URL_API
   private _comun = API.USERS
@@ -52,9 +55,11 @@ export class UsuarioService {
     return this._http.put<any>(url, usuario)
   }
 
-
-
-
+  // Logout del usuario
+  logout() : Observable<any>{
+    let url = this._url + this._comun + 'logout/'
+    return this._http.get<any>(url)
+  }
 
 
 }

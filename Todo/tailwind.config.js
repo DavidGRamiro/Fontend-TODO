@@ -1,11 +1,22 @@
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
 module.exports = {
   content: [
-      "./src/**/*.{html,ts}",
+    // Archivos HTML, TypeScript, etc., donde Tailwind buscará clases para extraer
+    './src/**/*.html',
+    './src/**/*.ts',
   ],
   theme: {
-    extend: {},
+    extend: {
+      // Personalización del tema de Tailwind (si es necesario)
+    },
   },
-  plugins: [],
+  variants: {
+    extend: {
+      // Habilitar variantes adicionales de Tailwind (si es necesario)
+    },
+  },
+  plugins: [
+    // Habilitar plugins de Tailwind (si es necesario)
+  ],
+  corePlugins: { preflight: false }
 }
-

@@ -12,7 +12,9 @@
   font-size: 40px;
 }
 
-.tooltip{
-  width: 20px;
-  height: 10px;
+.lista>li{
+  list-style: none;
+  margin-bottom: 20px;
 }
+
+
