@@ -1,23 +1,26 @@
-import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewChild, inject } from '@angular/core';
 import { CommonModule, NumberFormatStyle, isPlatformBrowser } from '@angular/common';
 import { UsuarioService } from '../../../services/usuario.service';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import InfoPerfilComponent from './info-perfil/info-perfil.component';
 import GridTareasComponent from '../../../tareas/grid-tareas/grid-tareas.component';
 import TareasFormComponent from '../../../tareas/tareas-form/tareas-form.component';
-import SucripcionComponent from '../subscripcion/subscripcion.component';
 import SubscripcionComponent from '../subscripcion/subscripcion.component';
+import { Router } from '@angular/router';
+import TareasComponent from '../../../tareas/tareas.component';
 
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
   imports: [CommonModule, GridTareasComponent, TareasFormComponent,
-            InfoPerfilComponent, SubscripcionComponent],
+            InfoPerfilComponent, SubscripcionComponent, TareasComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.sass'
 })
 export default class PerfilComponent implements OnInit{
+
+  @ViewChild('tareas') tareas : TareasComponent = new TareasComponent()
 
   public token_usuario : string = ''
   public usuario_loguado : any = null;
@@ -33,11 +36,12 @@ export default class PerfilComponent implements OnInit{
   // Definición del menú
   items: MenuItem[] | undefined;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object){}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object ,
+              private _msgService: MessageService,
+              private _router : Router){}
 
   ngOnInit(): void {
     this.obtenerToken();
-    // this.cargarMenuDashboard();
   }
 
   // Método para obtener el token de localstore y recuperación del usuario
@@ -57,42 +61,49 @@ export default class PerfilComponent implements OnInit{
       next : (data) => {
         if(data){
           this.usuario_loguado = data.data;
-          console.log(this.usuario_loguado)
         }
       },
       error: (err) => {
-        console.log(err)
+        this._msgService.add({ severity: 'error', detail: '', summary: 'No se han podido recuperar los datos del usuario' })
       }
     })
   }
 
+   // Método para cerrar sesión y eliminar el token
+   logout(){
+    this.userService.logout().subscribe({
+      next : (data) => {
+
+        setTimeout(() => {
+          this._msgService.add({ severity: 'success', detail: '', summary:'Sesión cerrada' })
+          this._router.navigate(['/login'])
+        },1000)
+      },
+      error : (err) => {
+        this._msgService.add({ severity: 'error', detail: 'Ha ocurrido un error', summary: err.message })
+      }
+    })
+  }
+
+  // Control entre pestañas
   mostrarGridTaks(){
     this.bActualizarDatos = false
     this.bMostrarSub = false
     this.bMostrarGrid = true
   }
 
+  // Control entre pestañas
   editarUsuario(){
     this.bMostrarGrid = false
     this.bMostrarSub = false
     this.bActualizarDatos = true
   }
 
+  // Control entre pestañas
   mostrarSub(){
     this.bActualizarDatos = false
     this.bMostrarGrid = false
     this.bMostrarSub = true
 
-  }
-
-  logout(){
-    this.userService.logout().subscribe({
-      next : (data) => {
-        console.log(data)
-      },
-      error : (err) => {
-        console.log(err)
-      }
-    })
   }
 }

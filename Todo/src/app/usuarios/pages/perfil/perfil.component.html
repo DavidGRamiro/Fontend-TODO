@@ -1,20 +1,19 @@
 
-<div class="flex">
-  <div>
-    <div class="flex h-screen w-28 flex-col justify-between bg-dark">
-      <div>
-        <ul class="space-y-3 pt-6 w-32">
+<div class="flex h-screen overflow hidden">
+  <div class="flex flex-col w-28 bg-dark">
+    <div class="flex flex-col h-full justify-between">
+        <ul class="lista flex flex-col mt-6 space-y-3">
           <li>
             <!-- Item pencil para mostrar el dashboard de todas las tareas-->
-            <a (click)="mostrarGridTaks()"  class="group relative flex justify-center rounded px- py-1.5 text-white-500 hover:bg-dark-50 hover:text-yellow-700 ">
+            <a (click)="mostrarGridTaks()"  class="text-white-500 hover:bg-dark-50 hover:text-yellow-700 ">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" class="w-5 h-5 cursor-pointer">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
               </svg>
             </a>
           </li>
-          <!-- PRIMER ITEM DEL MENU -->
+          <!-- Item monedero para cambios de suscripción -->
           <li>
-            <a (click)="mostrarSub()" class="group relative flex justify-center rounded px-2 py-1.5 text-white-500 hover:bg-dark-50 hover:text-purple-700">
+            <a (click)="mostrarSub()" class=" text-white-500 hover:bg-dark-50 hover:text-purple-700">
               <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5 opacity-75"
@@ -25,18 +24,14 @@
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                    />
+                      d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
               </svg>
-              <span
-                class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
-                Billing
-              </span>
+              <span class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100"></span>
             </a>
           </li>
-          <!-- PRIMER ITEM DEL MENU -->
+          <!-- Item en construcción, asociado a calculadora del menú Añadir href -> a -->
           <li>
-            <a href="" class="group relative flex justify-center rounded px-2 py-1.5 text-white-500 hover:bg-dark-50 hover:text-purple-700">
+            <a  class="text-white-500 hover:bg-dark-50 hover:text-purple-700">
               <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5 opacity-75"
@@ -47,17 +42,14 @@
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                    />
+                      d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
               </svg>
-              <span class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
-                Invoices
-              </span>
+              <span class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100"></span>
             </a>
           </li>
-          <!-- PRIMER ITEM DEL MENU -->
+          <!-- Item editar datos de usuario -->
           <li>
-            <a (click)="editarUsuario()"class="group relative flex justify-center rounded px-2 py-1.5 text-white-500 hover:bg-dark-50 hover:text-purple-700">
+            <a (click)="editarUsuario()"class="text-white-500 hover:bg-dark-50 hover:text-purple-700">
               <svg
                   xmlns="http://www.w3.org/2000/svg"
                   class="h-5 w-5 opacity-75 cursor-pointer"
@@ -79,11 +71,11 @@
       </div>
 
       <!-- CERRRAR SESIÓN -->
-      <div class="sticky inset-x-0 bottom-0 border-t border-black-100 bg-dark p-2">
+      <div class="border-t border-red-100 bg-dark p-2">
         <form action="">
           <button
             (click)="logout()"
-            class="group relative flex w-full justify-center rounded-lg px-2 py-1.5 text-sm text-red-500 hover:bg-black-50 hover:text-red-700">
+            class="w-full rounded-lg py-1.5 text-sm text-red-500 hover:bg-black-50 hover:text-red-700">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5 opacity-75"
@@ -97,27 +89,27 @@
                     d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                   />
             </svg>
-            <span class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100">
-              Cerrar sesión
-            </span>
+            <span class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100"></span>
           </button>
         </form>
       </div>
     </div>
-  </div>
+    <div class="flex-1 overflow-hidden">
+      <!-- Control de muestra de los diferentes componentes del menú -->
 
-  <!-- Control de muestra de los diferentes componentes del menú -->
-  @if( bMostrarGrid){
-    <!-- Mostrar el grid de todas las tareas que tiene -->
-    <app-grid-tareas></app-grid-tareas>
-  }
-  @else if(bActualizarDatos){
-    <!-- Mostar el panel de actualización de datos personales de usuario -->
-    <app-info-perfil></app-info-perfil>
-  }
-  @else if (bMostrarSub) {
-    <app-sucripcion></app-sucripcion>
-  }
-</div>
+      @if( bMostrarGrid){
+        <!-- Mostrar el grid de todas las tareas que tiene -->
+        <app-tareas></app-tareas>
+      }
+      @else if(bActualizarDatos){
+        <!-- Mostar el panel de actualización de datos personales de usuario -->
+        <app-info-perfil></app-info-perfil>
+      }
+      @else if (bMostrarSub) {
+        <!-- Mostrar componente de cambio de suscripción  -->
+        <app-sucripcion></app-sucripcion>
+      }
+    </div>
+  </div>
 
 

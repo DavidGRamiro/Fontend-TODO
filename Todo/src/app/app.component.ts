@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import {  MessageService } from 'primeng/api';
@@ -24,6 +24,12 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this._primengConfig.ripple = true;
+  }
+
+  // Control cuando se cierra la pestaña del navegador para eliminar el token
+  @HostListener('window:beforeunload', ['$event'])
+  checkControlToken(){
+    localStorage.removeItem('token');
   }
 
 }

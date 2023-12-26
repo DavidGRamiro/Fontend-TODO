@@ -1,9 +1,14 @@
 
-@import 'primeng/resources/themes/lara-dark-teal/theme.css';
-@import 'primeng/resources/primeng.min.css';
-@import 'primeicons/primeicons.css';
+@import "tailwindcss/base" layer(tailwindcss);
+@import "tailwindcss/components" layer(tailwindcss);
+@import "tailwindcss/utilities" layer(tailwindcss);
+
+@import "primeng/resources/themes/soho-dark/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
 
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+html, body {
+  overflow-x: hidden; /* Evitar desplazamiento horizontal */
+  overflow-y: auto; /* Mostrar solo la barra vertical si es necesario */
+}

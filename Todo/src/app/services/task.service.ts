@@ -22,6 +22,30 @@ export class TaskService {
     return this._http.get(url)
   }
 
+  obtenertareasAsyn() : Promise<any>{
+    let url = this._url + this._comun
+    return this._http.get(url).toPromise()
+
+  }
+
+  // Creación de tarea
+  crearTarea( tarea : any) : Observable<any>{
+    let url = this._url + this._comun
+    return this._http.post<any>(url, tarea)
+  }
+
+  // Editar una tarea existente
+  editarTarea(idTarea : number, tarea : any) : Observable<any>{
+    let url = this._url + this._comun + `${idTarea}/`
+    return this._http.put<any>(url,tarea)
+  }
+
+  // Eliminar una tarea
+  eliminarTarea(idTarea:number):Observable<any>{
+    let url = this._url + this._comun + `${idTarea}/`
+    return this._http.delete<void>(url)
+  }
+
   // Obtener todas las categorias
   obtenerCategorias():Observable<any>{
     let url = this._url + this._comun_cat

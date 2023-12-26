@@ -1,1 +1,67 @@
-<p>grid-tareas works!</p>
+
+<div class="grid">
+  <div class="col">
+      <div class="text-center p-3 border-round-sm bg-primary font-bold">
+        GRID DE TAREAS
+      </div>
+  </div>
+</div>
+
+
+<!-- CRUD -->
+<div class="crud-buttons">
+  <p-button icon="pi pi-plus" class="add"  [rounded]="true" severity="success" (onClick)="addTarea()" ></p-button>
+</div>
+
+
+
+<div class="container flex">
+  <div class="card tabla">
+
+    <p-table [value]="aTareas" responsiveLayout="stack" [breakpoint]="'960px'" [tableStyle]="{'max-width': '50rem'}">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Titulo</th>
+                <th>Categoria</th>
+                <th>Usuario</th>
+                <th>Estado</th>
+                <th>Fecha estimada</th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-columns="columns">
+            <tr>
+                <td><span class="p-column-title"></span>{{item.id}}</td>
+                <td><span class="p-column-title">Price</span>{{item.titulo}}</td>
+                <td><span class="p-column-title"></span>{{item.categoria}}</td>
+                <td><span class="p-column-title"></span>{{item.usuario_asignado}}</td>
+                <td><span class="p-column-title"></span>{{item.severity}}</td>
+                <td><span class="p-column-title"></span>{{item.fecha_estimada | date}}</td>
+                <p-button  icon="pi pi-info" [rounded]="true" [text]="true" severity="default" (onClick)="verDetalle()"></p-button>
+                <p-button  icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warning"></p-button>
+                <p-button  icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"></p-button>
+              </tr>
+        </ng-template>
+    </p-table>
+  </div>
+</div>
+
+
+
+
+<!-- Abre el modal de alta de tareas -->
+<p-dialog header="Nueva tarea" [(visible)]="altaTarea"  [style]="{width: '50vw'}">
+  <app-tareas-form></app-tareas-form>
+</p-dialog>
+
+<p-sidebar [(visible)]="resumenTarea" position="right">
+  <h3>Detalle de tarea .. </h3>
+  <p>
+      AGREGAR COMPONENTE DE DETALLE, O PERSONALIZAR EL COMPONENTE FORMULARIO CUANDO VENGA DESDE ESTE COMPOENNTE
+  </p>
+</p-sidebar>
+
+
+
+
