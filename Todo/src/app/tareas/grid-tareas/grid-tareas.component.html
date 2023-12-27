@@ -51,11 +51,11 @@
 
 
 <!-- Abre el modal de alta de tareas -->
-<p-dialog header="Nueva tarea" [(visible)]="altaTarea"  [style]="{width: '50vw'}">
+<p-dialog header="Nueva tarea" [(visible)]="altaTarea" [maximizable]="true" [style]="{width: '50vw', height: '50%'}">
   <app-tareas-form></app-tareas-form>
 </p-dialog>
 
-<p-sidebar [(visible)]="resumenTarea" position="right">
+<p-sidebar [(visible)]="resumenTarea" position="right" >
   <h3>Detalle de tarea .. </h3>
   <p>
       AGREGAR COMPONENTE DE DETALLE, O PERSONALIZAR EL COMPONENTE FORMULARIO CUANDO VENGA DESDE ESTE COMPOENNTE

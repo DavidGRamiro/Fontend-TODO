@@ -1,3 +1,7 @@
 :host {
   display: block;
 }
+
+.submit-button{
+  float: inline-end;
+}

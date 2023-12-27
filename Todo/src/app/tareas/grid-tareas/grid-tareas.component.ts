@@ -49,7 +49,6 @@ export default class GridTareasComponent implements OnInit {
           this.aTareas = data
           this.showTable = true
           this.cdRef.detectChanges();
-          console.log(this.aTareas) // Forzar detección de cambios
         },200)
       }
     })
