@@ -47,7 +47,7 @@ export default class LoginComponent implements OnInit {
           // Obtenemos el token de la respuesta
           this._token = data.token
           let token_json = JSON.stringify(this._token)
-          localStorage.setItem('token', token_json)
+          sessionStorage.setItem('token', token_json)
 
           setTimeout(()=>{
             this._router.navigate(['/usuarios/perfil'])

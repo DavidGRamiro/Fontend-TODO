@@ -23,20 +23,20 @@
         <div class="col">
           <!-- Selección de importancia de tarea -->
           <span class="p-float-label">
-            <p-dropdown  placeholder="Prioridad de tarea" optionLabel="name" inputId="float-label" formControlName="prioridad"></p-dropdown>
+            <p-dropdown [options]="prioridades" placeholder="Prioridad de tarea" optionLabel="tipo" inputId="float-label" formControlName="severity"></p-dropdown>
             <label for="float-label">Prioridad</label>
           </span>
         </div>
         <div class="col card flex justify-content-center">
           <!-- Fecha estimada de finalzación -->
           <span class="p-float-label">
-            <p-calendar inputId="fecha_estimada" p-calendar appendTo="body" dateFormat="dd.mm.yy" formControlName="fc_estimada"></p-calendar>
+            <p-calendar inputId="fecha_estimada" p-calendar appendTo="body"  formControlName="fecha_estimada"></p-calendar>
             <label for="fecha_estimada">Fecha estimada</label>
           </span>
         </div>
         <div class="col">
           <span class="p-float-label">
-            <p-dropdown  placeholder="Seleccione una categoria" optionLabel="name" inputId="float-label" formControlName="categoria"></p-dropdown>
+            <p-dropdown  [options]="categorias" placeholder="Seleccione una categoria" optionLabel="categoria" inputId="float-label" formControlName="id_fk_categoria"></p-dropdown>
             <label for="float-label">Categoría</label>
           </span>
         </div>
