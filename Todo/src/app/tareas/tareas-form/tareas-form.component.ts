@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Output, type OnInit, EventEmitter } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -10,6 +10,7 @@ import { TaskService } from '../../services/task.service';
 import { ServerModule } from '@angular/platform-server';
 import { serialize } from 'v8';
 import { TareaModel } from '../../shared/models/tarea.modelo';
+import { MessageService } from 'primeng/api';
 
 @Component({
     selector: 'app-tareas-form',
@@ -24,6 +25,9 @@ import { TareaModel } from '../../shared/models/tarea.modelo';
 })
 export default class TareasFormComponent implements OnInit {
 
+  // Emisión de respuesta a componente padre para cerrar el modal y refrescar el grid
+  @Output() eventRes : EventEmitter<boolean> = new EventEmitter<boolean>()
+
   private _tareasService = inject(TaskService);
   public categorias : any[] = [];
   public prioridades :any[] = [ { tipo: 'Baja', color : 'Green' },
@@ -37,7 +41,7 @@ export default class TareasFormComponent implements OnInit {
     this.getCategorias();
   }
 
-  constructor(){}
+  constructor(private _messageService : MessageService){}
 
   // Control de formulario
   public formTask : FormGroup = new FormGroup({
@@ -59,7 +63,7 @@ export default class TareasFormComponent implements OnInit {
         this.categorias = data;
       },
       error :(err) => {
-        console.log(err)
+        this._messageService.add({ severity: 'error', summary: 'UPS !', detail: 'No hemos podido recuperar tus tareas, inténtelo más tarde.' })
       }
     })
   }
@@ -71,10 +75,11 @@ export default class TareasFormComponent implements OnInit {
       this.formatearDatos(this.tarea);
       this._tareasService.crearTarea(this.tarea).subscribe({
         next : (data) => {
-          console.log(data)
+          this._messageService.add({ severity: 'success', summary: 'Bravo !', detail: 'Tienes una nueva tarea !' })
+          this.eventRes.emit(true)
         },
         error : (err) => {
-          console.log(err)
+          this._messageService.add({ severity: 'error', summary: 'UPS !', detail: 'Parece que no ha ocurrido un error, inténtalo más tarde.' })
         }
       })
     }
@@ -100,13 +105,6 @@ export default class TareasFormComponent implements OnInit {
     this.formTask.reset()
   }
 
-  onSelect(event:any){
-
-    this.fechaSeleccionada = event
-    const fechaEnTexto = this.fechaSeleccionada.toLocaleDateString().split('T')[0];
-    console.log(fechaEnTexto)
-
-  }
 
 
 
