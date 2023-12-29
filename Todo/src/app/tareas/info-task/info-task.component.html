@@ -1,0 +1,32 @@
+
+
+
+<div>
+  <div class="editar-button">
+    <p-button icon="pi pi-pencil" [rounded]="true" severity="warning" [outlined]="true"></p-button>
+  </div>
+  <h1>{{ tareaRecibida.titulo }}</h1>
+  <div class="chips mb-3">
+    <p-chip label="{{tareaRecibida.usuario_asignado}}" [style]="{'background-color': 'purple','margin-right': '8px', 'height': '30px' }" icon="pi pi-user"></p-chip>
+    <p-chip label="{{tareaRecibida.severity}}" [style]="{'background-color': 'grey' ,'margin-right': '8px','height': '30px' }" icon="pi pi-bolt"></p-chip>
+    <p-chip label="{{tareaRecibida.categoria}}" [style]="{'background-color': 'green' ,'margin-right': '8px','height': '30px' }" icon="pi pi-pencil"></p-chip>
+  </div>
+  <p-divider></p-divider>
+
+  <div>
+    <h3>Resumen</h3>
+    <p>{{ tareaRecibida.descripcion }}</p>
+  </div>
+</div>
+
+<p-divider></p-divider>
+<div>
+  <h3>Descripción</h3>
+  {{ tareaRecibida.texto }}
+</div>
+
+<div>
+  {{ tareaRecibida.tiempo_restante }} dia/s para terminar la tarea
+</div>
+
+

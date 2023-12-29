@@ -1,0 +1,17 @@
+:host {
+  display: block;
+
+}
+
+.editar-button{
+  float: right;
+  margin-right: 15px;
+}
+
+.chips{
+  margin-right: 15px;
+  margin-top: 10px;
+  float: right;
+  margin: space-between;
+
+}

@@ -22,16 +22,10 @@ export class TaskService {
     return this._http.get(url)
   }
 
-  obtenertareasAsyn() : Promise<any>{
-    let url = this._url + this._comun
-    return this._http.get(url).toPromise()
-
-  }
-
   // Creación de tarea
   crearTarea( tarea : any) : Observable<any>{
     let url = this._url + this._comun
-    return this._http.post<any>(url, tarea)
+    return this._http.post(url, tarea)
   }
 
   // Editar una tarea existente

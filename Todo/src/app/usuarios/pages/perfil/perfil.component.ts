@@ -8,13 +8,15 @@ import TareasFormComponent from '../../../tareas/tareas-form/tareas-form.compone
 import SubscripcionComponent from '../subscripcion/subscripcion.component';
 import { Router } from '@angular/router';
 import TareasComponent from '../../../tareas/tareas.component';
+import { ToastModule } from 'primeng/toast';
 
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
   imports: [CommonModule, GridTareasComponent, TareasFormComponent,
-            InfoPerfilComponent, SubscripcionComponent, TareasComponent],
+            InfoPerfilComponent, SubscripcionComponent, TareasComponent,
+            ToastModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.sass'
 })
@@ -70,15 +72,15 @@ export default class PerfilComponent implements OnInit{
   }
 
    // Método para cerrar sesión y eliminar el token
-   logout(){
+  logout(){
     this.userService.logout().subscribe({
       next : (data) => {
-
+        this._msgService.add({ severity: 'success', detail: '', summary:'Sesión cerrada' })
         setTimeout(() => {
-          this._msgService.add({ severity: 'success', detail: '', summary:'Sesión cerrada' })
-          this._router.navigate(['/login'])
-        },1000)
-      },
+          this._router.navigate([''])
+          sessionStorage.removeItem('token')
+        },1500)
+    },
       error : (err) => {
         this._msgService.add({ severity: 'error', detail: 'Ha ocurrido un error', summary: err.message })
       }

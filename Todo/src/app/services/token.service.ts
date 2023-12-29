@@ -10,11 +10,10 @@ export class TokenService implements HttpInterceptor{
   constructor() { }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const data = localStorage.getItem('token');
+    const data = sessionStorage.getItem('token');
 
     if(data){
       const token = JSON.parse(data)
-
       request = request.clone({
         setHeaders: {
           Authorization: `Token ${token}`

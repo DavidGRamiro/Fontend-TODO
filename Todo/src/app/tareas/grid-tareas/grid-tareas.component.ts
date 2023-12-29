@@ -10,6 +10,12 @@ import {MatButtonModule} from '@angular/material/button';
 import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { SidebarModule } from 'primeng/sidebar';
+import { TareaModel } from '../../shared/models/tarea.modelo';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import InfoTaskComponent from '../info-task/info-task.component';
+
+
 
 
 
@@ -19,7 +25,7 @@ import { SidebarModule } from 'primeng/sidebar';
   imports: [
       CommonModule, DialogModule, TareasFormComponent,
       ButtonModule, MatButtonModule, TableModule, ToolbarModule,
-      SidebarModule
+      SidebarModule, ToastModule, InfoTaskComponent
     ],
   templateUrl: './grid-tareas.component.html',
   styleUrl: './grid-tareas.component.css',
@@ -29,13 +35,15 @@ export default class GridTareasComponent implements OnInit {
 
 
   private _taskService = inject(TaskService)
-  public aTareas: any = null;
+  public aTareas: TareaModel[] = [];
+  public tareaSeleccionada : TareaModel = new TareaModel()
 
   public showTable: boolean = false;
   public resumenTarea: boolean = false;
   public altaTarea : boolean = false;
 
-  constructor( private cdRef: ChangeDetectorRef){}
+  constructor( private cdRef: ChangeDetectorRef,
+              private _messageService : MessageService){}
 
   ngOnInit(): void {
     this.getTareas()
@@ -49,21 +57,45 @@ export default class GridTareasComponent implements OnInit {
           this.aTareas = data
           this.showTable = true
           this.cdRef.detectChanges();
-          console.log(this.aTareas) // Forzar detección de cambios
         },200)
       }
     })
   }
 
+  // Eliminamos una tarea del grid a partir del id
+  eliminarTarea(tarea : any){
+    this._taskService.eliminarTarea(tarea.id).subscribe({
+      next : (data) =>{
+        this._messageService.add({ severity: 'success', detail: '', summary: data.resultado })
+        setTimeout(() => {
+          this.getTareas()
+        },1000)
+      },
+      error : (err) => {
+        this._messageService.add({ severity: 'error', detail: '', summary: err.resultado })
+      }
+    })
+  }
+
   // Ver el detalle de una tarea a partir del id que recibe
-  verDetalle(){
+  verDetalle( tarea : any){
+    this.tareaSeleccionada = tarea
     this.resumenTarea = true
-    console.log("Ver el detalle de una tarea")
   }
 
   // Añadir tarea. Abre formulario de alta
   addTarea(){
     this.altaTarea = true
+  }
+
+  // Recibimos la respuesta del formulario de tareas, para refrescar el grid y cerrar el modal
+  getEmitterForm(event : any){
+    if(event){
+      this.altaTarea = false
+      this.getTareas()
+    }else{
+      this.altaTarea = true
+    }
   }
 
 }
