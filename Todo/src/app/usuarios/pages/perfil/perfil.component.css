@@ -1,12 +1,6 @@
 
 
-.button-config{
-  display: flex;
-  float: right;
-  margin: 40px;
-  color: white;
-  cursor: pointer;
-}
+
 
 .btn-config .p-button .p-button-icon{
   font-size: 40px;
@@ -17,4 +11,13 @@
   margin-bottom: 20px;
 }
 
+.menu-lateral{
+  box-shadow: 2px 2px 5px
+}
+
+.layout-panel {
+  display: flex;
+  height: 98vh;
+  overflow: hidden;
+}
 
