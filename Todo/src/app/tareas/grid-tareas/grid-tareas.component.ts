@@ -38,9 +38,9 @@ export default class GridTareasComponent implements OnInit {
   public aTareas: TareaModel[] = [];
   public tareaSeleccionada : TareaModel = new TareaModel()
 
-  public showTable: boolean = false;
   public resumenTarea: boolean = false;
   public altaTarea : boolean = false;
+  public isEdditing : boolean = false;
 
   constructor( private cdRef: ChangeDetectorRef,
               private _messageService : MessageService){}
@@ -54,10 +54,13 @@ export default class GridTareasComponent implements OnInit {
     this._taskService.obtenerTareas().subscribe( {
       next: (data) => {
         setTimeout(() => {
-          this.aTareas = data
-          this.showTable = true
+          this.ordenarLista(data)
           this.cdRef.detectChanges();
         },200)
+      },
+      error: (err) => {
+        this._messageService.add({ severity: 'error', detail: 'Ha ocurrido un error al intentar recuperar las tareas', summary:'Vaya !'  })
+        console.log(err)
       }
     })
   }
@@ -77,15 +80,38 @@ export default class GridTareasComponent implements OnInit {
     })
   }
 
+  // Ordenar lista de tareas por ID
+  ordenarLista( tareas : any){
+    this.aTareas = tareas
+    if(this.aTareas && this.aTareas.length > 0){
+      this.aTareas.sort((a,b) =>{
+        if(a.id !== null && b.id !== null){
+          return a.id - b.id
+        }
+        return 0
+      })
+    }
+  }
+
   // Ver el detalle de una tarea a partir del id que recibe
   verDetalle( tarea : any){
     this.tareaSeleccionada = tarea
     this.resumenTarea = true
   }
 
+  // Edición de una tarea a partir del id recibido
+  editarTarea(tarea : any){
+    this.tareaSeleccionada = new TareaModel()
+    this.tareaSeleccionada = tarea
+    // Se abre el mismo modal y componente que para el alta de una tarea
+    this.altaTarea = true
+    this.isEdditing = true
+  }
+
   // Añadir tarea. Abre formulario de alta
   addTarea(){
     this.altaTarea = true
+    this.isEdditing =  false
   }
 
   // Recibimos la respuesta del formulario de tareas, para refrescar el grid y cerrar el modal
@@ -96,6 +122,12 @@ export default class GridTareasComponent implements OnInit {
     }else{
       this.altaTarea = true
     }
+  }
+
+  // Recoge el evento de cerrar el modal de edición o de alta
+  cerrarModal(){
+    this.isEdditing = false;
+    this.altaTarea = false;
   }
 
 }
