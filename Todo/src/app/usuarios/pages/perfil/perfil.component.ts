@@ -44,6 +44,8 @@ export default class PerfilComponent implements OnInit{
 
   ngOnInit(): void {
     this.obtenerToken();
+    // Se abre de primera instancia el componente del grid principal
+    this.bMostrarGrid = true
   }
 
   // Método para obtener el token de localstore y recuperación del usuario

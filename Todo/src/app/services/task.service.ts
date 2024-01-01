@@ -29,9 +29,9 @@ export class TaskService {
   }
 
   // Editar una tarea existente
-  editarTarea(idTarea : number, tarea : any) : Observable<any>{
+  editarTarea(idTarea : number, tarea : any) {
     let url = this._url + this._comun + `${idTarea}/`
-    return this._http.put<any>(url,tarea)
+    return this._http.put(url,tarea)
   }
 
   // Eliminar una tarea

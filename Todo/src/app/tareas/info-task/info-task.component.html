@@ -2,9 +2,6 @@
 
 
 <div>
-  <div class="editar-button">
-    <p-button icon="pi pi-pencil" [rounded]="true" severity="warning" [outlined]="true"></p-button>
-  </div>
   <h1>{{ tareaRecibida.titulo }}</h1>
   <div class="chips mb-3">
     <p-chip label="{{tareaRecibida.usuario_asignado}}" [style]="{'background-color': 'purple','margin-right': '8px', 'height': '30px' }" icon="pi pi-user"></p-chip>
@@ -23,10 +20,6 @@
 <div>
   <h3>Descripción</h3>
   {{ tareaRecibida.texto }}
-</div>
-
-<div>
-  {{ tareaRecibida.tiempo_restante }} dia/s para terminar la tarea
 </div>
 
 

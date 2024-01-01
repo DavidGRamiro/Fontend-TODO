@@ -13,8 +13,6 @@
   <p-button icon="pi pi-plus" class="add"  [rounded]="true" severity="success" (onClick)="addTarea()" ></p-button>
 </div>
 
-
-
 <div class="container flex">
   <div class="card tabla">
 
@@ -39,7 +37,7 @@
                 <td><span class="p-column-title"></span>{{item.severity}}</td>
                 <td><span class="p-column-title"></span>{{item.fecha_estimada | date}}</td>
                 <p-button  icon="pi pi-info" [rounded]="true" [text]="true" severity="default" (onClick)="verDetalle(item)"></p-button>
-                <p-button  icon="pi pi-pencil" [rounded]="true" [text]="true" severity="warning"></p-button>
+                <p-button  icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="editarTarea(item)" severity="warning"></p-button>
                 <p-button  icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="eliminarTarea(item)"></p-button>
               </tr>
         </ng-template>
@@ -49,12 +47,12 @@
 
 
 <!-- Abre el modal de alta de tareas -->
-<p-dialog header="Nueva tarea" [(visible)]="altaTarea" [maximizable]="true" [style]="{width: '50vw', height: '50%'}">
-  <app-tareas-form (eventRes)="getEmitterForm($event)" ></app-tareas-form>
+<p-dialog header="Nueva tarea" [(visible)]="altaTarea" [maximizable]="true" [style]="{width: '50vw', height: '50%'}" (onHide)="cerrarModal()">
+  <app-tareas-form (eventRes)="getEmitterForm($event)" [editarTarea]="tareaSeleccionada" [isEditting]="isEdditing"></app-tareas-form>
 </p-dialog>
 
 <!-- Abre el SideBar con la información sobre la tarea seleccioanda -->
-<p-sidebar [(visible)]="resumenTarea" blockScrol="false" [style]="{width: '40vw'}" position="right" >
+<p-sidebar [(visible)]="resumenTarea" blockScrol="false" [style]="{width: '30vw'}" position="right" >
     <app-info-task [task]="tareaSeleccionada"></app-info-task>
 </p-sidebar>
 

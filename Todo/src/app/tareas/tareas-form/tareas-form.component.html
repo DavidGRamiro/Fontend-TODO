@@ -1,61 +1,121 @@
 
 
 <div>
-  <form [formGroup]="formTask" (ngSubmit)="guardarTarea()">
-    <div class="mt-5">
-      <div class="grid">
-        <div class="col">
-          <!-- Titulo de tarea -->
-          <span class="p-float-label">
-            <input pInputText style="width:80%;" id="username" formControlName="titulo"/>
-            <label for="titulo">Titulo</label>
-          </span>
+  @if (isEditting) {
+    <form [formGroup]="formTaskEdit" (ngSubmit)="updateTarea()">
+      <div class="mt-5">
+        <div class="grid">
+          <div class="col">
+            <!-- Titulo de tarea -->
+            <span class="p-float-label">
+              <input pInputText style="width:80%;" [(ngModel)]="tareaEdicion.titulo" id="username" formControlName="titulo"/>
+              <label for="titulo">Titulo</label>
+            </span>
+          </div>
+          <div class="col">
+            <!-- Descripcion de tarea -->
+            <span class="p-float-label">
+              <input pInputText style="width:80%;" id="descripcion" [(ngModel)]="tareaEdicion.descripcion" formControlName="descripcion"/>
+              <label for="descripcion">Descripción</label>
+            </span>
+          </div>
         </div>
-        <div class="col">
-          <!-- Descripcion de tarea -->
-          <span class="p-float-label">
-            <input pInputText style="width:80%;" id="descripcion" formControlName="descripcion"/>
-            <label for="descripcion">Descripción</label>
-          </span>
+        <div class="grid mt-2">
+          <div class="col">
+            <!-- Selección de importancia de tarea -->
+            <span class="p-float-label">
+              <p-dropdown [options]="prioridades" placeholder="Prioridad de tarea" [(ngModel)]="prioridadEntrante[0]" [style]="{'width': '300px'}" optionLabel="tipo" inputId="float-label" formControlName="severity"></p-dropdown>
+              <label for="float-label">Prioridad</label>
+            </span>
+          </div>
+          <div class="col card flex justify-content-center">
+            <!-- Fecha estimada de finalzación -->
+            <span class="p-float-label">
+              <p-calendar inputId="fecha_estimada" p-calendar appendTo="body" [(ngModel)]="fechaEntrante"  formControlName="fecha_estimada"></p-calendar>
+              <label for="fecha_estimada">Fecha estimada</label>
+            </span>
+          </div>
+          <div class="col">
+            <span class="p-float-label">
+              <p-dropdown  [options]="categorias" placeholder="Seleccione una categoria" [(ngModel)]="categoriaEntrante[0]" [style]="{'width': '200px'}" optionLabel="categoria" inputId="float-label" formControlName="id_fk_categoria"></p-dropdown>
+              <label for="float-label">Categoría</label>
+            </span>
+          </div>
+        </div>
+        <div class="grid mt-3">
+          <div class="col-12">
+            <!-- texto de tarea -->
+            <span class="p-float-label">
+              <textarea id="float-input" rows="5" cols="50" pInputTextarea style="width: 100%;" [(ngModel)]="tareaEdicion.texto" formControlName="texto"></textarea>
+              <label for="float-input">Describe la tarea</label>
+            </span>
+          </div>
         </div>
       </div>
-      <div class="grid mt-2">
-        <div class="col">
-          <!-- Selección de importancia de tarea -->
-          <span class="p-float-label">
-            <p-dropdown [options]="prioridades" placeholder="Prioridad de tarea" optionLabel="tipo" inputId="float-label" formControlName="severity"></p-dropdown>
-            <label for="float-label">Prioridad</label>
-          </span>
-        </div>
-        <div class="col card flex justify-content-center">
-          <!-- Fecha estimada de finalzación -->
-          <span class="p-float-label">
-            <p-calendar inputId="fecha_estimada" p-calendar appendTo="body"  formControlName="fecha_estimada"></p-calendar>
-            <label for="fecha_estimada">Fecha estimada</label>
-          </span>
-        </div>
-        <div class="col">
-          <span class="p-float-label">
-            <p-dropdown  [options]="categorias" placeholder="Seleccione una categoria" optionLabel="categoria" inputId="float-label" formControlName="id_fk_categoria"></p-dropdown>
-            <label for="float-label">Categoría</label>
-          </span>
-        </div>
+      <div class="submit-button mt-3">
+        <p-button  type="submit" [rounded]="true" severity="error" icon="pi pi-check" iconPos="right"></p-button>
       </div>
-      <div class="grid mt-3">
-        <div class="col-12">
-          <!-- texto de tarea -->
-          <span class="p-float-label">
-            <textarea id="float-input" rows="5" cols="50" pInputTextarea style="width: 100%;" formControlName="texto"></textarea>
-            <label for="float-input">Describe la tarea</label>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="submit-button mt-3">
-      <p-button (onClick)="limpiarForm()" [rounded]="true" [style]="{'margin-right': '10px'}" severity="help" icon="pi pi-times" iconPos="right"></p-button>
-      <p-button  type="submit" [rounded]="true" severity="error" icon="pi pi-check" iconPos="right"></p-button>
-    </div>
-  </form>
+    </form>
+  }
+  @else {
+    <form [formGroup]="formTask" (ngSubmit)="guardarTarea()">
+      <div class="mt-5">
+        <div class="grid">
+          <div class="col">
 
+            <!-- Titulo de tarea -->
+            <span class="p-float-label">
+              <input pInputText style="width:80%;" id="username" formControlName="titulo"/>
+              <label for="titulo">Titulo</label>
+            </span>
+          </div>
+          <div class="col">
+            <!-- Descripcion de tarea -->
+            <span class="p-float-label">
+              <input pInputText style="width:80%;" id="descripcion" formControlName="descripcion"/>
+              <label for="descripcion">Descripción</label>
+            </span>
+          </div>
+        </div>
+        <div class="grid mt-2">
+          <div class="col">
+            <!-- Selección de importancia de tarea -->
+            <span class="p-float-label">
+              <p-dropdown [options]="prioridades" placeholder="Prioridad de tarea" [style]="{'width': '300px'}" optionLabel="tipo" inputId="float-label" formControlName="severity"></p-dropdown>
+              <label for="float-label">Prioridad</label>
+            </span>
+          </div>
+          <div class="col card flex justify-content-center">
+            <!-- Fecha estimada de finalzación -->
+            <span class="p-float-label">
+              <p-calendar inputId="fecha_estimada" p-calendar appendTo="body"  formControlName="fecha_estimada"></p-calendar>
+              <label for="fecha_estimada">Fecha estimada</label>
+            </span>
+          </div>
+          <div class="col">
+            <span class="p-float-label">
+              <p-dropdown  [options]="categorias" placeholder="Seleccione una categoria" [style]="{'width': '200px'}" optionLabel="categoria" inputId="float-label" formControlName="id_fk_categoria"></p-dropdown>
+              <label for="float-label">Categoría</label>
+            </span>
+          </div>
+        </div>
+        <div class="grid mt-3">
+          <div class="col-12">
+            <!-- texto de tarea -->
+            <span class="p-float-label">
+              <textarea id="float-input" rows="5" cols="50" pInputTextarea style="width: 100%;" formControlName="texto"></textarea>
+              <label for="float-input">Describe la tarea</label>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="submit-button mt-3">
+        <p-button (onClick)="limpiarForm()" [rounded]="true" [style]="{'margin-right': '10px'}" severity="help" icon="pi pi-times" iconPos="right"></p-button>
+        <p-button  type="submit" [rounded]="true" severity="error" icon="pi pi-check" iconPos="right"></p-button>
+      </div>
+    </form>
+
+
+  }
 
 </div>

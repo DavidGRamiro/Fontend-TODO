@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
 
@@ -20,7 +21,7 @@ export const routes: Routes = [
     path: 'usuarios',
     loadComponent: () => import('./usuarios/usuarios.component'),
     children : [
-      { path: 'perfil', title: 'Perfil', loadComponent: () => import('./usuarios/pages/perfil/perfil.component')},
+      { path: 'perfil', title: 'Perfil', loadComponent: () => import('./usuarios/pages/perfil/perfil.component'), canActivate: [authGuard]},
     ]
   },
   {

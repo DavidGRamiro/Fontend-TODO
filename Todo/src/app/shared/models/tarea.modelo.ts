@@ -13,6 +13,23 @@ export class TareaModel{
     public id_fk_usuario : string = '',
     public id_fk_categoria : string = '',
     public categoria : string = '',
-    public usuario_asignado : string = ''
+    public usuario_asignado : string = '',
+  ){}
+}
+
+
+export class CategoriaModel{
+  constructor(
+    public id : number | null = null,
+    public categoria : string = '',
+    public descipcion_cat : string = '',
+    public color : string = ''
+  ){}
+}
+
+export class PrioridadesModelo{
+  constructor(
+    public tipo : string = '',
+    public color : string = ''
   ){}
 }
