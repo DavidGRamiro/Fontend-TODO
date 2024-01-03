@@ -107,7 +107,7 @@ export default class InfoPerfilComponent implements OnInit {
           next: (data) => {
             this._messageService.add({ severity:'success', detail:'', summary:'Datos actualizados' })
             setTimeout(() => {
-              // Ëmitimos el cierre del modal de update de datos
+              // Emitimos el cierre del modal de update de datos
               this.eventRes.emit(false)
               // Formateo de los valores del formulario
               this.formData.reset()

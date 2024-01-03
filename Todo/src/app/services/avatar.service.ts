@@ -6,6 +6,8 @@ import { Injectable } from '@angular/core';
 export class AvatarService {
 
   private _avatarFolder = 'assets/images'
+  // Recurso generados de avatares
+  // https://getavataaars.com/
 
   constructor() {}
 
