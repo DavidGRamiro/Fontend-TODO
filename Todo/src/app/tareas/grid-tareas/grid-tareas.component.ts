@@ -69,9 +69,9 @@ export default class GridTareasComponent implements OnInit {
   eliminarTarea(tarea : any){
     this._taskService.eliminarTarea(tarea.id).subscribe({
       next : (data) =>{
-        this._messageService.add({ severity: 'success', detail: '', summary: data.resultado })
         setTimeout(() => {
           this.getTareas()
+          this._messageService.add({ severity: 'success', detail: '', summary: data.resultado })
         },1000)
       },
       error : (err) => {
