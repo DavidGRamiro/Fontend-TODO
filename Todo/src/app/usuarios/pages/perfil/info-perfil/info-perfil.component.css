@@ -1,5 +1,7 @@
 :host {
   display: block;
+  height: 100%;
+  background-color: rgb(188, 211, 211);
 }
 
 ::ng-deep .p-toast-message {
@@ -23,6 +25,10 @@
 .image{
   border-radius: 50%;
   max-height: 150px;
-  box-shadow: 0 0 10px black;
+  box-shadow: 0 0 10px white;
+}
+
+::ng-deep .p-carousel-vertical .p-carousel-container{
+  max-height: 450px;
 }
 

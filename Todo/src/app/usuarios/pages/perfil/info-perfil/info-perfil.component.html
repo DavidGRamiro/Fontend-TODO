@@ -33,31 +33,35 @@
           </span>
         </div>
         <div class="buttons">
-          <!-- <button pButton pRipple label="Cancelar" class="p-button-warning mr-2  text align center" (click)="limpiarForm()"></button> -->
           <button pButton pRipple label="Guardar cambios" class="p-button-success font-bold" type="submmit"></button>
         </div>
       </form>
     </div>
   </div>
-  <div class="col-6 carrousel ">
+  <div class="col-6 carrousel">
     <h3 class="text-center">Elige tu avatar !</h3>
-    <p-carousel [value]="avatarsName" [numVisible]="1" orientation="vertical" [numScroll]="1" verticalViewPortHeight="530px" [circular]="true" [responsiveOptions]="responsiveOptions">
+    <p-carousel [value]="avatarsName" [numVisible]="1"
+                orientation="vertical"
+                [numScroll]="1"
+                verticalViewPortHeight="350px"
+                [circular]="true"
+                [responsiveOptions]="responsiveOptions"
+                [showIndicators]="false"
+                styleClass="carrousel-img">
       <ng-template let-item pTemplate="item">
-          <div class="text-center py-8 px-3">
-              <div class="mb-1">
-                  <img [src]="item.img" [alt]="item.name" class="w-3" />
+          <div class="text-center m-2">
+              <div class="">
+                  <img [src]="item.img" [alt]="item.name" class="w-2 img"  />
                 </div>
                 <div>
                   <h4 class="mb-1">{{ item.name }}</h4>
-                  <div class="mt-5 flex align-items-center justify-content-center gap-2">
-                    <p-button icon="pi pi-check" [rounded]="true" (onClick)="setAvatar()" />
+                  <div class="mt-7 flex align-items-center justify-content-center">
+                    <p-button icon="pi pi-check" [rounded]="true" (onClick)="setAvatar(item)" />
                   </div>
                 </div>
           </div>
       </ng-template>
   </p-carousel>
-
-
   </div>
 </div>
 

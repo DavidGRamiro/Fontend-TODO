@@ -139,8 +139,9 @@ export default class InfoPerfilComponent implements OnInit {
 
   // Se establece como avatar de usuario
   // Pensar si se guarda la ruta en BBDD para recuperarla cuando se inicia sesión
-  setAvatar(){
+  setAvatar(item : any){
     console.log("Eligiendo avatar")
+    console.log(item)
   }
 }
 
