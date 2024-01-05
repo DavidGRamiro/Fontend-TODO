@@ -8,6 +8,7 @@
 @import "primeicons/primeicons.css";
 
 
+
 html, body {
   overflow-x: hidden; /* Evitar desplazamiento horizontal */
   overflow-y: auto; /* Mostrar solo la barra vertical si es necesario */

@@ -101,7 +101,7 @@
       }
       @else if(bActualizarDatos){
         <!-- Mostar el panel de actualización de datos personales de usuario -->
-        <app-info-perfil></app-info-perfil>
+        <app-info-perfil [usuarioLogueado]="usuario_loguado"></app-info-perfil>
       }
       @else if (bMostrarSub) {
         <!-- Mostrar componente de cambio de suscripción  -->

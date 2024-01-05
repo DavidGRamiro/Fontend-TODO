@@ -1,45 +1,70 @@
-<div class="grid">
-  <div class="col">
-      <div class="text-center p-3 border-round-sm bg-primary font-bold">1</div>
+<p-breadcrumb class="" [model]="items" [home]="home"></p-breadcrumb>
+
+<div class="text-center">
+  <p class="title bold">Modificación de datos de perfil</p>
+</div>
+<div class="grid mt-5">
+  <div class="col-6 form-perfil">
+    <div class="mr-8 ">
+      <form class="form" [formGroup]="formData" (ngSubmit)="actualizarDatos()">
+        <div class="spans">
+          <span class="p-float-label text align center mb-4 mt-4">
+            <input pInputText id="name" formControlName="name" [(ngModel)]="user.name" required="true"/>
+            <label for="name">Nombre</label>
+          </span>
+          <span class="p-float-label mb-4">
+            <input pInputText id="username" formControlName="username" [(ngModel)]="user.username" required="true"/>
+            <label for="username">Nombre de usuario</label>
+          </span>
+          <span class="p-float-label mb-4">
+            <input pInputText id="email" formControlName="email" [(ngModel)]="user.email" required="true"/>
+            <label for="email">Correo eléctrónico</label>
+          </span>
+          <span class="p-float-label mb-4">
+            <input  pInputText type="password" [disabled]="true" [value]="user.password"/>
+            <label for="username">Contraseña</label>
+          </span>
+          <span class="p-float-label mb-4">
+            <input type="password" pInputText id="new_password" formControlName="password_nueva"/>
+            <label for="username">Nueva contraseña</label>
+          </span>
+          <span class="p-float-label mb-4">
+            <input type="password" pInputText id="confirmar_contraseña" formControlName="password_confirmacion" required="true"/>
+            <label for="Confrimar contraseña">Confirmar contraseña</label>
+          </span>
+        </div>
+        <div class="buttons">
+          <button pButton pRipple label="Guardar cambios" class="p-button-success font-bold" type="submmit"></button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-6 carrousel avatares">
+    <h3 class="text-center avatar-title">¡No olvides elegir tu avatar!</h3>
+    <p-carousel [value]="avatarsName" [numVisible]="1"
+                orientation="vertical"
+                [numScroll]="1"
+                verticalViewPortHeight="350px"
+                [circular]="true"
+                [responsiveOptions]="responsiveOptions"
+                [showIndicators]="false"
+                styleClass="carrousel-img"
+                class="carrousel">
+      <ng-template let-item pTemplate="item">
+          <div class="text-center m-2">
+              <div class="">
+                  <img [src]="item.img" [alt]="item.name" class="w-2 img"  />
+                </div>
+                <div>
+                  <h4 class="mb-1">{{ item.name }}</h4>
+                  <div class="mt-7 flex align-items-center justify-content-center">
+                    <p-button icon="pi pi-check" [rounded]="true" (onClick)="setAvatar(item)" />
+                  </div>
+                </div>
+          </div>
+      </ng-template>
+  </p-carousel>
   </div>
 </div>
 
-
-<!-- <div class="container">
-
-  <form [formGroup]="formData" (ngSubmit)="actualizarDatos()">
-    <div>
-      <span class="p-float-label mb-4 mt-4">
-        <input pInputText id="name" formControlName="name" [(ngModel)]="user.name" required="true"/>
-        <label for="name">Nombre</label>
-      </span>
-      <span class="p-float-label mb-4">
-        <input pInputText id="username" formControlName="username" [(ngModel)]="user.username" required="true"/>
-        <label for="username">Nombre de usuario</label>
-      </span>
-      <span class="p-float-label mb-4">
-        <input pInputText id="email" formControlName="email" [(ngModel)]="user.email" required="true"/>
-        <label for="email">Correo eléctrónico</label>
-      </span>
-      <span class="p-float-label mb-4">
-        <input pInputText type="password" [disabled]="true" [value]="user.password" />
-        <label for="username">Contraseña</label>
-      </span>
-      <span class="p-float-label mb-4">
-        <input pInputText id="new_password" formControlName="password_nueva"/>
-        <label for="username">Nueva contraseña</label>
-      </span>
-      <span class="p-float-label mb-4">
-        <input pInputText id="confirmar_contraseña" formControlName="password_confirmacion" required="true"/>
-        <label for="Confrimar contraseña">Confirmar contraseña</label>
-      </span>
-    </div>
-    <div class="flex flex-row-reverse">
-      <button pButton pRipple label="Guardar cambios" class="p-button-success" type="submmit"></button>
-    </div>
-  </form>
-</div> -->
-
 <p-toast></p-toast>
-
-<h1>Info de perfil</h1>
