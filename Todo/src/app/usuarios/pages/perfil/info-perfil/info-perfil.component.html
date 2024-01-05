@@ -1,9 +1,10 @@
+<p-breadcrumb class="" [model]="items" [home]="home"></p-breadcrumb>
 
-<div class="mt-8 text-center">
-  <h4>Actualización de datos de usuario</h4>
+<div class="text-center">
+  <p class="title bold">Modificación de datos de perfil</p>
 </div>
 <div class="grid mt-5">
-  <div class="col-6">
+  <div class="col-6 form-perfil">
     <div class="mr-8 ">
       <form class="form" [formGroup]="formData" (ngSubmit)="actualizarDatos()">
         <div class="spans">
@@ -38,8 +39,8 @@
       </form>
     </div>
   </div>
-  <div class="col-6 carrousel">
-    <h3 class="text-center">Elige tu avatar !</h3>
+  <div class="col-6 carrousel avatares">
+    <h3 class="text-center avatar-title">¡No olvides elegir tu avatar!</h3>
     <p-carousel [value]="avatarsName" [numVisible]="1"
                 orientation="vertical"
                 [numScroll]="1"
@@ -47,7 +48,8 @@
                 [circular]="true"
                 [responsiveOptions]="responsiveOptions"
                 [showIndicators]="false"
-                styleClass="carrousel-img">
+                styleClass="carrousel-img"
+                class="carrousel">
       <ng-template let-item pTemplate="item">
           <div class="text-center m-2">
               <div class="">

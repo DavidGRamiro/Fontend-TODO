@@ -61,5 +61,11 @@ export class UsuarioService {
     return this._http.get<any>(url)
   }
 
+  // Método para actualizar solo el avatar del usuario
+  setAvatar( avatar : any){
+    let url = this._url + this._comun + 'update_avatar/'
+    return this._http.put(url,avatar)
+  }
+
 
 }

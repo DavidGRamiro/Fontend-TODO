@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { UsuarioService } from '../../../../services/usuario.service';
 import { ToastModule } from 'primeng/toast';
 import { PasswordModule } from 'primeng/password';
@@ -12,6 +12,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { AvatarService } from '../../../../services/avatar.service';
 import { CarouselModule } from 'primeng/carousel';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
 
 
 @Component({
@@ -20,8 +21,7 @@ import { CarouselModule } from 'primeng/carousel';
     imports: [
         CommonModule, ReactiveFormsModule, FormsModule, InputTextModule,
         ButtonModule, ToastModule, PasswordModule, DividerModule,
-        AvatarModule, AvatarGroupModule, CarouselModule
-
+        AvatarModule, AvatarGroupModule, CarouselModule, BreadcrumbModule,
     ],
     templateUrl: './info-perfil.component.html',
     styleUrl: './info-perfil.component.css',
@@ -36,12 +36,19 @@ export default class InfoPerfilComponent implements OnInit {
     }
   }
 
-  public user : any = {}
+  public user : any = {};
   public password_similar : boolean = false;
   public password_coincide : boolean = true;
-  public avatares : any[] = []
+  public avatares : any[] = [];
   public responsiveOptions: any[] | undefined;
-  public avatarsName : any[] = []
+  public avatarsName : any[] = [];
+  public usuario : any = null
+
+  // Configuración de BreadCrumb.
+  public items : MenuItem[] = [];
+  public home : MenuItem | undefined;
+
+
 
   public formData : FormGroup = new FormGroup({
     username : new FormControl( ),
@@ -60,6 +67,8 @@ export default class InfoPerfilComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarAvatares();
+    this.cargarBreadCrumb();
+    this.getInformacionUsuario()
     this.responsiveOptions = [
       {
           breakpoint: '1199px',
@@ -77,6 +86,12 @@ export default class InfoPerfilComponent implements OnInit {
           numScroll: 1
       }
     ];
+  }
+
+  // Inicializar el BreadCrumb
+  cargarBreadCrumb(){
+    this.items = [ { label: ' Perfil'}]
+    this.home = { icon: 'pi pi-home', routerLink: '/'}
   }
 
 
@@ -137,11 +152,32 @@ export default class InfoPerfilComponent implements OnInit {
     }
   }
 
+  getInformacionUsuario(){
+    this._userService.getInfoToken(sessionStorage.getItem('user')).subscribe({
+        next : (data) => {
+          this.usuario = data.data
+          console.log('Información del token ',data)
+        },
+        error: (err) => {
+          console.log('Error recuperar token', err)
+        }
+      },
+    )
+  }
+
   // Se establece como avatar de usuario
-  // Pensar si se guarda la ruta en BBDD para recuperarla cuando se inicia sesión
   setAvatar(item : any){
-    console.log("Eligiendo avatar")
-    console.log(item)
+
+    let avatar_usuario = { 'avatar': item.img }
+    this._userService.setAvatar(avatar_usuario).subscribe({
+      next: (data : any) => {
+        this._messageService.add({ severity: 'success', detail: data.resultado })
+      },
+      error : (err) => {
+        this._messageService.add({ severity: 'error', summary: 'Ups!', detail: 'No hemos podido actualizar tu avatar. Intenténtalo más tarde' })
+      }
+    })
+
   }
 }
 
