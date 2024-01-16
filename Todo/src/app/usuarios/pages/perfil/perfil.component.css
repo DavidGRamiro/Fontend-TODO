@@ -18,3 +18,16 @@
   overflow: hidden;
 }
 
+.chip{
+  top: 0;
+  right: 0;
+  position: absolute;
+  margin: 20px;
+  cursor: pointer;
+}
+
+::ng-deep .p-chip{
+  padding-left: 5px;
+  width: 100%;
+}
+

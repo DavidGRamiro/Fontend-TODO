@@ -49,7 +49,6 @@ export default class InfoPerfilComponent implements OnInit {
   public home : MenuItem | undefined;
 
 
-
   public formData : FormGroup = new FormGroup({
     username : new FormControl( ),
     password : new FormControl( ),
@@ -66,8 +65,6 @@ export default class InfoPerfilComponent implements OnInit {
   constructor( private _messageService : MessageService){}
 
   ngOnInit(): void {
-    this.cargarAvatares();
-    this.cargarBreadCrumb();
     this.getInformacionUsuario()
     this.responsiveOptions = [
       {
@@ -86,6 +83,8 @@ export default class InfoPerfilComponent implements OnInit {
           numScroll: 1
       }
     ];
+    this.cargarBreadCrumb();
+    this.cargarAvatares();
   }
 
   // Inicializar el BreadCrumb
@@ -146,12 +145,14 @@ export default class InfoPerfilComponent implements OnInit {
 
   // Cargamos todos los avatares que tenemos predefinidos
   cargarAvatares(){
-    this.avatares = this._avatarService.getTodosAvatares()
+    this.avatares = this._avatarService.getTodosAvatares();
+    console.log(this.avatares)
     for(let av of this.avatares){
       this.avatarsName.push( {'name': av.name, img: av.img} )
     }
   }
 
+  // Recuperamos la información del usuario logueado
   getInformacionUsuario(){
     this._userService.getInfoToken(sessionStorage.getItem('user')).subscribe({
         next : (data) => {
@@ -167,7 +168,6 @@ export default class InfoPerfilComponent implements OnInit {
 
   // Se establece como avatar de usuario
   setAvatar(item : any){
-
     let avatar_usuario = { 'avatar': item.img }
     this._userService.setAvatar(avatar_usuario).subscribe({
       next: (data : any) => {

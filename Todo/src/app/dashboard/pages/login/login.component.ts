@@ -43,7 +43,7 @@ export default class LoginComponent implements OnInit {
     if(this.formLogin.valid){
       this._usuarioService.login(this.formLogin.value).subscribe({
         next: (data) => {
-
+          console.log(data)
           // Obtenemos el token de la respuesta
           this._token = data.token
           let token_json = JSON.stringify(this._token)

@@ -1,3 +1,11 @@
+<div class="chip">
+  <p-chip label="{{ usuario_loguado.name }}" image="{{usuario_loguado.avatar}}" (click)="overlaypanel.toggle($event)">
+  </p-chip>
+</div>
+<!-- TODO: Pensar que poner en el desplegable -->
+<p-overlayPanel #overlaypanel>
+  <p>Contenido del desplegable</p>
+</p-overlayPanel>
 
 <div class="layout-panel">
   <div class="flex flex-col w-28 bg-dark  menu-lateral">
