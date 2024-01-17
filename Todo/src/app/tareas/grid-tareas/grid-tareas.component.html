@@ -7,7 +7,6 @@
   </div>
 </div>
 
-
 <!-- CRUD -->
 <div class="crud-buttons">
   <p-button icon="pi pi-plus" class="add"  [rounded]="true" severity="success" (onClick)="addTarea()" ></p-button>
@@ -43,6 +42,10 @@
         </ng-template>
     </p-table>
   </div>
+  <div class="ml-4">
+    <p-speedDial [model]="items" direction="down" showIcon="pi pi-info"></p-speedDial>
+  </div>
+
 </div>
 
 

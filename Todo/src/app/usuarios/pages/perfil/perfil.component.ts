@@ -67,7 +67,6 @@ export default class PerfilComponent implements OnInit{
       next : (data) => {
         if(data){
           this.usuario_loguado = data.data;
-          console.log(this.usuario_loguado)
         }
       },
       error: (err) => {

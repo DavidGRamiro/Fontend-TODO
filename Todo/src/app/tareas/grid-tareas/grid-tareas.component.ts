@@ -11,12 +11,10 @@ import { TableModule } from 'primeng/table';
 import { ToolbarModule } from 'primeng/toolbar';
 import { SidebarModule } from 'primeng/sidebar';
 import { TareaModel } from '../../shared/models/tarea.modelo';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import InfoTaskComponent from '../info-task/info-task.component';
-
-
-
+import { SpeedDialModule } from 'primeng/speeddial';
 
 
 @Component({
@@ -25,7 +23,7 @@ import InfoTaskComponent from '../info-task/info-task.component';
   imports: [
       CommonModule, DialogModule, TareasFormComponent,
       ButtonModule, MatButtonModule, TableModule, ToolbarModule,
-      SidebarModule, ToastModule, InfoTaskComponent
+      SidebarModule, ToastModule, InfoTaskComponent, SpeedDialModule
     ],
   templateUrl: './grid-tareas.component.html',
   styleUrl: './grid-tareas.component.css',
@@ -35,6 +33,7 @@ export default class GridTareasComponent implements OnInit {
 
 
   private _taskService = inject(TaskService)
+
   public aTareas: TareaModel[] = [];
   public tareaSeleccionada : TareaModel = new TareaModel()
 
@@ -42,11 +41,42 @@ export default class GridTareasComponent implements OnInit {
   public altaTarea : boolean = false;
   public isEdditing : boolean = false;
 
+  items: MenuItem[] = []
+
   constructor( private cdRef: ChangeDetectorRef,
               private _messageService : MessageService){}
 
   ngOnInit(): void {
-    this.getTareas()
+    this.getTareas();
+    this.items = [
+      {
+          icon: 'pi pi-pencil',
+          command: () => {
+              this._messageService.add({ severity: 'info', summary: 'Add', detail: 'Data Added' });
+          }
+      },
+      {
+          icon: 'pi pi-refresh',
+          command: () => {
+              this._messageService.add({ severity: 'success', summary: 'Update', detail: 'Data Updated' });
+          }
+      },
+      {
+          icon: 'pi pi-trash',
+          command: () => {
+              this._messageService.add({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' });
+          }
+      },
+      {
+          icon: 'pi pi-upload',
+          routerLink: ['/fileupload']
+      },
+      {
+          icon: 'pi pi-external-link',
+          target:'_blank',
+          url: 'http://angular.io'
+      }
+  ];
   }
 
   // Obtenemos todas las tareas que estan dadas de alta
