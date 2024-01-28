@@ -40,6 +40,9 @@ export default class GridTareasComponent implements OnInit {
   public resumenTarea: boolean = false;
   public altaTarea : boolean = false;
   public isEdditing : boolean = false;
+  public hayTareas : boolean = false;
+
+  public selection! : TareaModel;
 
   items: MenuItem[] = []
 
@@ -52,29 +55,20 @@ export default class GridTareasComponent implements OnInit {
       {
           icon: 'pi pi-pencil',
           command: () => {
-              this._messageService.add({ severity: 'info', summary: 'Add', detail: 'Data Added' });
-          }
-      },
-      {
-          icon: 'pi pi-refresh',
-          command: () => {
-              this._messageService.add({ severity: 'success', summary: 'Update', detail: 'Data Updated' });
+            this.editarTarea(this.selection);
           }
       },
       {
           icon: 'pi pi-trash',
           command: () => {
-              this._messageService.add({ severity: 'error', summary: 'Delete', detail: 'Data Deleted' });
+              this.eliminarTarea(this.selection);
           }
       },
       {
-          icon: 'pi pi-upload',
-          routerLink: ['/fileupload']
-      },
-      {
-          icon: 'pi pi-external-link',
-          target:'_blank',
-          url: 'http://angular.io'
+          icon: 'pi pi-info-circle',
+          command: () => {
+            this.verDetalle(this.selection);
+          }
       }
   ];
   }
@@ -84,6 +78,13 @@ export default class GridTareasComponent implements OnInit {
     this._taskService.obtenerTareas().subscribe( {
       next: (data) => {
         setTimeout(() => {
+
+          if(data.length > 0){
+            this.hayTareas = true;
+          }else{
+            this.hayTareas = false;
+          }
+
           this.ordenarLista(data)
           this.cdRef.detectChanges();
         },200)
@@ -95,19 +96,23 @@ export default class GridTareasComponent implements OnInit {
     })
   }
 
-  // Eliminamos una tarea del grid a partir del id
+  // Eliminamos una tarea del grid a partir del id de la selección
   eliminarTarea(tarea : any){
-    this._taskService.eliminarTarea(tarea.id).subscribe({
-      next : (data) =>{
-        setTimeout(() => {
-          this.getTareas()
-          this._messageService.add({ severity: 'success', detail: '', summary: data.resultado })
-        },1000)
-      },
-      error : (err) => {
-        this._messageService.add({ severity: 'error', detail: '', summary: err.resultado })
-      }
-    })
+    if(this.selection !== undefined){
+      this._taskService.eliminarTarea(tarea.id).subscribe({
+        next : (data) =>{
+          setTimeout(() => {
+            this.getTareas()
+            this._messageService.add({ severity: 'success', detail: '', summary: data.resultado })
+          },1000)
+        },
+        error : (err) => {
+          this._messageService.add({ severity: 'error', detail: '', summary: err.resultado })
+        }
+      })
+    }else{
+      this._messageService.add({ severity: 'warn', detail: '', summary: 'Selecciona una tarea para poder eliminarla' })
+    }
   }
 
   // Ordenar lista de tareas por ID
@@ -125,17 +130,25 @@ export default class GridTareasComponent implements OnInit {
 
   // Ver el detalle de una tarea a partir del id que recibe
   verDetalle( tarea : any){
-    this.tareaSeleccionada = tarea
-    this.resumenTarea = true
+    if(this.selection !== undefined){
+      this.tareaSeleccionada = tarea
+      this.resumenTarea = true
+    }else{
+      this._messageService.add({ severity: 'warn', detail: '', summary: 'Selecciona una tarea para poder ver el detalle' })
+    }
   }
 
   // Edición de una tarea a partir del id recibido
   editarTarea(tarea : any){
-    this.tareaSeleccionada = new TareaModel()
-    this.tareaSeleccionada = tarea
-    // Se abre el mismo modal y componente que para el alta de una tarea
-    this.altaTarea = true
-    this.isEdditing = true
+    if(this.selection !== undefined){
+      this.tareaSeleccionada = new TareaModel()
+      this.tareaSeleccionada = tarea
+      // Se abre el mismo modal y componente que para el alta de una tarea
+      this.altaTarea = true
+      this.isEdditing = true
+    }else{
+      this._messageService.add({ severity: 'warn', detail: '', summary: 'Selecciona una tarea para poder editarla' })
+    }
   }
 
   // Añadir tarea. Abre formulario de alta
