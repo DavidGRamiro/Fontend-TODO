@@ -18,3 +18,16 @@
   margin: 20px;
 }
 
+
+::ng-deep .p-speeddial-button.p-button.p-button-icon-only {
+  width: 3rem;
+  height: 3rem;
+}
+
+.no-task{
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+

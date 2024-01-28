@@ -8,45 +8,53 @@
 </div>
 
 <!-- CRUD -->
-<div class="crud-buttons">
+<div class="crud-buttons" *ngIf="hayTareas">
   <p-button icon="pi pi-plus" class="add"  [rounded]="true" severity="success" (onClick)="addTarea()" ></p-button>
 </div>
 
-<div class="container flex">
+<div class="container flex" *ngIf="hayTareas; else noHayTareas">
   <div class="card tabla">
 
-    <p-table [value]="aTareas" responsiveLayout="stack" [breakpoint]="'960px'" [tableStyle]="{'max-width': '50rem'}">
+    <p-table [value]="aTareas" responsiveLayout="stack" [breakpoint]="'960px'"
+            selectionMode="single" dataKey="id"
+            [(selection)]="selection" [tableStyle]="{'max-width': '50rem'}">
         <ng-template pTemplate="header">
             <tr>
-                <th>ID</th>
+                <th style="width: 4rem"></th>
                 <th>Titulo</th>
                 <th>Categoria</th>
                 <th>Usuario</th>
-                <th>Estado</th>
+                <th>Prioridad</th>
                 <th>Fecha estimada</th>
-                <th></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-item let-columns="columns">
             <tr>
-                <td><span class="p-column-title"></span>{{item.id}}</td>
+                <td>
+                  <p-tableRadioButton [value]="item"></p-tableRadioButton>
+                </td>
                 <td><span class="p-column-title">Price</span>{{item.titulo}}</td>
                 <td><span class="p-column-title"></span>{{item.categoria}}</td>
                 <td><span class="p-column-title"></span>{{item.usuario_asignado}}</td>
                 <td><span class="p-column-title"></span>{{item.severity}}</td>
                 <td><span class="p-column-title"></span>{{item.fecha_estimada | date}}</td>
-                <p-button  icon="pi pi-info" [rounded]="true" [text]="true" severity="default" (onClick)="verDetalle(item)"></p-button>
-                <p-button  icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="editarTarea(item)" severity="warning"></p-button>
-                <p-button  icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="eliminarTarea(item)"></p-button>
               </tr>
         </ng-template>
     </p-table>
   </div>
   <div class="ml-4">
-    <p-speedDial [model]="items" direction="down" showIcon="pi pi-info"></p-speedDial>
+    <p-speedDial [model]="items" direction="down" showIcon="pi pi-info" hideIcon="pi pi-times"></p-speedDial>
   </div>
 
 </div>
+
+<!-- Texto y botón en el caso de que no existan tareas -->
+<ng-template #noHayTareas>
+  <div class="no-task">
+    <h2>Tu lista de tareas está vacía, empieza añadiendo la primera</h2>
+    <p-button label="Añadir tarea" icon="pi pi-plus" class="add"  [rounded]="true" severity="success" (onClick)="addTarea()" iconPos="right" ></p-button>
+  </div>
+</ng-template>
 
 
 <!-- Abre el modal de alta de tareas -->
