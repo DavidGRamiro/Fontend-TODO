@@ -9,6 +9,10 @@ import SubscripcionComponent from '../subscripcion/subscripcion.component';
 import { Router } from '@angular/router';
 import TareasComponent from '../../../tareas/tareas.component';
 import { ToastModule } from 'primeng/toast';
+import { ChipModule } from 'primeng/chip';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ButtonModule } from 'primeng/button';
+
 
 
 @Component({
@@ -16,7 +20,7 @@ import { ToastModule } from 'primeng/toast';
   standalone: true,
   imports: [CommonModule, GridTareasComponent, TareasFormComponent,
             InfoPerfilComponent, SubscripcionComponent, TareasComponent,
-            ToastModule],
+            ToastModule, ChipModule, OverlayPanelModule, ButtonModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.sass'
 })
@@ -108,6 +112,10 @@ export default class PerfilComponent implements OnInit{
     this.bActualizarDatos = false
     this.bMostrarGrid = false
     this.bMostrarSub = true
+  }
 
+  // Desplegar un menú
+  clickAvatar(){
+    console.log('Click avatar')
   }
 }

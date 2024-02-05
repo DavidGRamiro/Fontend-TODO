@@ -23,8 +23,16 @@ export class AvatarService {
       { name: 'Mama',img:`${this._avatarFolder}/avataaars7.png`},
       { name: 'Tio',img:`${this._avatarFolder}/avataaars8.png`},
       { name: 'Juanito',img:`${this._avatarFolder}/avataaars9.png`},
-      { name: 'Pepito',img:`${this._avatarFolder}/avataaars10.png`}
+      { name: 'Pepito',img:`${this._avatarFolder}/avataaars10.png`},
     ]
+  }
+
+  getDefaultAvatar(){
+    let json_avatar = {
+      name: 'Default',
+      img:`${this._avatarFolder}/default.png`
+    }
+    return json_avatar;
   }
 
 }
