@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@100&display=swap');
 
 .center-horizontally {
   margin-left: auto;
@@ -16,6 +16,7 @@
   display: flex;
   justify-content: end;
   margin: 20px;
+  padding-top: 20px;
 }
 
 
@@ -25,9 +26,28 @@
 }
 
 .no-task{
+  font-family: 'Josefin Slab', serif;
+  font-size: 18px;
   margin: 0;
   padding: 0;
   text-align: center;
 }
+
+.svg-image{
+  width: 40%;
+  height: 40%;
+  margin: 30px auto;
+  display: block;
+}
+
+::ng-deep .p-breadcrumb{
+  background-color: #121212 !important;
+  border: none;
+  margin-left: 20px;
+}
+
+
+
+
 
 

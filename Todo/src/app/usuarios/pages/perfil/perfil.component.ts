@@ -11,6 +11,8 @@ import TareasComponent from '../../../tareas/tareas.component';
 import { ToastModule } from 'primeng/toast';
 import { ChipModule } from 'primeng/chip';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { ButtonModule } from 'primeng/button';
+
 
 
 @Component({
@@ -18,7 +20,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
   standalone: true,
   imports: [CommonModule, GridTareasComponent, TareasFormComponent,
             InfoPerfilComponent, SubscripcionComponent, TareasComponent,
-            ToastModule, ChipModule, OverlayPanelModule],
+            ToastModule, ChipModule, OverlayPanelModule, ButtonModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.sass'
 })

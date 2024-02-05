@@ -4,7 +4,8 @@
 </div>
 <!-- TODO: Pensar que poner en el desplegable -->
 <p-overlayPanel #overlaypanel>
-  <p>Contenido del desplegable</p>
+  <p-button icon="pi pi-power-off"  label="Cerrar sesión" [rounded]="true" severity="danger" (onClick)="logout()" ></p-button>
+
 </p-overlayPanel>
 
 <div class="layout-panel">
@@ -76,28 +77,6 @@
             </a>
           </li>
         </ul>
-      </div>
-
-      <!-- CERRRAR SESIÓN -->
-      <div class="border-t border-red-100 bg-dark p-2">
-          <button
-            (click)="logout()"
-            class="w-full rounded-lg py-1.5 text-sm text-red-500 hover:bg-black-50 hover:text-red-700">
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 opacity-75"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                  />
-            </svg>
-            <span class="absolute start-full top-1/2 ms-4 -translate-y-1/2 rounded bg-gray-900 px-2 py-1.5 text-xs font-medium text-white opacity-0 group-hover:opacity-100"></span>
-          </button>
       </div>
     </div>
     <div class="flex-1 overflow-hidden">

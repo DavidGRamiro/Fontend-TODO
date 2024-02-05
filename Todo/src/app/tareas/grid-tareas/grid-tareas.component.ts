@@ -15,6 +15,9 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import InfoTaskComponent from '../info-task/info-task.component';
 import { SpeedDialModule } from 'primeng/speeddial';
+import { DropdownModule } from 'primeng/dropdown';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+
 
 
 @Component({
@@ -23,7 +26,8 @@ import { SpeedDialModule } from 'primeng/speeddial';
   imports: [
       CommonModule, DialogModule, TareasFormComponent,
       ButtonModule, MatButtonModule, TableModule, ToolbarModule,
-      SidebarModule, ToastModule, InfoTaskComponent, SpeedDialModule
+      SidebarModule, ToastModule, InfoTaskComponent, SpeedDialModule,
+      DropdownModule, BreadcrumbModule
     ],
   templateUrl: './grid-tareas.component.html',
   styleUrl: './grid-tareas.component.css',
@@ -36,13 +40,18 @@ export default class GridTareasComponent implements OnInit {
 
   public aTareas: TareaModel[] = [];
   public tareaSeleccionada : TareaModel = new TareaModel()
+  public categorias : any[] = [];
+  public selector : any = null;
 
   public resumenTarea: boolean = false;
   public altaTarea : boolean = false;
   public isEdditing : boolean = false;
-  public hayTareas : boolean = false;
+  public hayTareas : boolean = true;
 
   public selection! : TareaModel;
+  // Configuración de BreadCrumb.
+  public itemsBread : MenuItem[] = [];
+  public home : MenuItem | undefined;
 
   items: MenuItem[] = []
 
@@ -50,7 +59,9 @@ export default class GridTareasComponent implements OnInit {
               private _messageService : MessageService){}
 
   ngOnInit(): void {
+    this.getCategorias();
     this.getTareas();
+    this.cargarBreadCrumb();
     this.items = [
       {
           icon: 'pi pi-pencil',
@@ -73,25 +84,28 @@ export default class GridTareasComponent implements OnInit {
   ];
   }
 
+
+  // Inicializar el BreadCrumb
+  cargarBreadCrumb(){
+    this.itemsBread = [ { label: ' Tareas'}]
+    this.home = { icon: 'pi pi-home', routerLink: '/'}
+  }
+
   // Obtenemos todas las tareas que estan dadas de alta
   getTareas(){
     this._taskService.obtenerTareas().subscribe( {
       next: (data) => {
-        setTimeout(() => {
-
-          if(data.length > 0){
-            this.hayTareas = true;
-          }else{
-            this.hayTareas = false;
-          }
-
-          this.ordenarLista(data)
-          this.cdRef.detectChanges();
-        },200)
+        debugger
+        if(data.length > 0){
+          this.hayTareas = true;
+        }else{
+          this.hayTareas = false;
+        }
+        this.ordenarLista(data)
+        this.cdRef.detectChanges();
       },
       error: (err) => {
         this._messageService.add({ severity: 'error', detail: 'Ha ocurrido un error al intentar recuperar las tareas', summary:'Vaya !'  })
-        console.log(err)
       }
     })
   }
@@ -117,7 +131,11 @@ export default class GridTareasComponent implements OnInit {
 
   // Ordenar lista de tareas por ID
   ordenarLista( tareas : any){
-    this.aTareas = tareas
+    if(this.selector === 'Todas' || this.selector === null){
+      this.aTareas = tareas
+    }else{
+      this.aTareas = tareas.filter((tarea : any) => tarea.categoria === this.selector)
+    }
     if(this.aTareas && this.aTareas.length > 0){
       this.aTareas.sort((a,b) =>{
         if(a.id !== null && b.id !== null){
@@ -171,6 +189,25 @@ export default class GridTareasComponent implements OnInit {
   cerrarModal(){
     this.isEdditing = false;
     this.altaTarea = false;
+  }
+
+  // Obtener todas las categorias existentes para aplicar al filtro
+  getCategorias(){
+    this._taskService.obtenerCategorias().subscribe({
+      next : (data) => {
+        this.categorias.push({ name: 'Todas', code: 0 })
+        let cat = data.map(( cat : any) => this.categorias.push({ name: cat.categoria, code: cat.id }))
+
+      },
+      error : (err) => {
+        this._messageService.add({ severity: 'error', detail: '', summary: 'Ha ocurrido un error al intentar recuperar las categorias' })
+      }
+    })
+  }
+
+  onChangeSelector(event : any){
+    this.selector = event.value.name
+    this.getTareas();
   }
 
 }
