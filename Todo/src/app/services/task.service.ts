@@ -46,5 +46,11 @@ export class TaskService {
     return this._http.get(url)
   }
 
+  // Alta de una categoría
+  altaCategoria(categoria : any): Observable<any>{
+    let url =  this._url + this._comun_cat
+    return this._http.post(url, categoria)
+  }
+
 
 }

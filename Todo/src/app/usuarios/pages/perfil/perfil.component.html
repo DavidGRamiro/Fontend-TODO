@@ -2,10 +2,9 @@
   <p-chip label="{{ usuario_loguado.name }}" image="{{usuario_loguado.avatar}}" (click)="overlaypanel.toggle($event)">
   </p-chip>
 </div>
-<!-- TODO: Pensar que poner en el desplegable -->
+<!-- Cerrar sesión al hacer click en el avatar del usuario -->
 <p-overlayPanel #overlaypanel>
   <p-button icon="pi pi-power-off"  label="Cerrar sesión" [rounded]="true" severity="danger" (onClick)="logout()" ></p-button>
-
 </p-overlayPanel>
 
 <div class="layout-panel">

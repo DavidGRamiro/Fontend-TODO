@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, Input, ViewChild, type OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, type OnInit } from '@angular/core';
 import { TaskService } from '../../services/task.service';
-import { TaggedTemplateExpr } from '@angular/compiler';
 import { ChangeDetectorRef } from '@angular/core';
 import { DialogModule } from 'primeng/dialog';
 import TareasFormComponent from '../tareas-form/tareas-form.component';
@@ -17,6 +16,8 @@ import InfoTaskComponent from '../info-task/info-task.component';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { DropdownModule } from 'primeng/dropdown';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 
@@ -27,7 +28,8 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
       CommonModule, DialogModule, TareasFormComponent,
       ButtonModule, MatButtonModule, TableModule, ToolbarModule,
       SidebarModule, ToastModule, InfoTaskComponent, SpeedDialModule,
-      DropdownModule, BreadcrumbModule
+      DropdownModule, BreadcrumbModule, ReactiveFormsModule,FormsModule,
+      InputTextModule
     ],
   templateUrl: './grid-tareas.component.html',
   styleUrl: './grid-tareas.component.css',
@@ -47,13 +49,23 @@ export default class GridTareasComponent implements OnInit {
   public altaTarea : boolean = false;
   public isEdditing : boolean = false;
   public hayTareas : boolean = true;
+  public modalCategorias : boolean = false;
 
   public selection! : TareaModel;
   // Configuración de BreadCrumb.
   public itemsBread : MenuItem[] = [];
   public home : MenuItem | undefined;
 
+  // Menu lateral
   items: MenuItem[] = []
+
+  // Formulario alta de categoria
+
+  public formCategoria : FormGroup = new FormGroup({
+    categoria : new FormControl( ),
+    descipcion_cat : new FormControl()
+  })
+
 
   constructor( private cdRef: ChangeDetectorRef,
               private _messageService : MessageService){}
@@ -197,7 +209,8 @@ export default class GridTareasComponent implements OnInit {
       next : (data) => {
         this.categorias.push({ name: 'Todas', code: 0 })
         let cat = data.map(( cat : any) => this.categorias.push({ name: cat.categoria, code: cat.id }))
-
+        // Eliminar duplicados
+        this.categorias = this.categorias.filter((v,i) => this.categorias.findIndex(item => item.name === v.name) === i)
       },
       error : (err) => {
         this._messageService.add({ severity: 'error', detail: '', summary: 'Ha ocurrido un error al intentar recuperar las categorias' })
@@ -205,9 +218,36 @@ export default class GridTareasComponent implements OnInit {
     })
   }
 
+  // Cambio de la selección de categorías sobre el grid
   onChangeSelector(event : any){
     this.selector = event.value.name
     this.getTareas();
+  }
+
+  // Abrir el modal de categorias
+  openModalCategorias(){
+    this.modalCategorias = true;
+  }
+
+  // Alta de una categoria
+  altaCategoria(){
+    if(this.formCategoria.valid){
+      this._taskService.altaCategoria(this.formCategoria.value).subscribe({
+        next: (data) => {
+          this.modalCategorias = false;
+          this._messageService.add({ severity: 'success', detail: '', summary: 'Nueva categoría disponible !' })
+          this.getCategorias();
+        },
+        error: (err) => {
+          this._messageService.add({ severity: 'error', detail: '', summary: 'Ha ocurrido un error al intentar dar de alta la categoría' })
+        }
+      })
+    }
+  }
+
+  // Cancelar el alta y limpiar el formulario
+  cancelarAlta(){
+    this.formCategoria.reset();
   }
 
 }

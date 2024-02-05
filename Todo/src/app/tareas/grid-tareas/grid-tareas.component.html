@@ -4,8 +4,7 @@
 <!-- CRUD -->
 <div class="crud-buttons" *ngIf="hayTareas">
   <div class="mr-2">
-    <!-- TODO: Añadir formulario de incluir nueva categoría -->
-    <p-button icon="pi pi-tag" class="add" [rounded]="true" severity="warn" ></p-button>
+    <p-button icon="pi pi-tag" class="add" [rounded]="true" severity="warn" (onClick)="openModalCategorias()"></p-button>
   </div>
   <p-button icon="pi pi-plus" class="add" [rounded]="true" severity="success" (onClick)="addTarea()" ></p-button>
 </div>
@@ -15,13 +14,14 @@
   <div class="card tabla">
     <!-- Filtro por tipo de tarea -->
     <div class="mb-3">
-      <p-dropdown [options]="categorias" optionLabel="name" [showClear]="true" placeholder="Filtro" (onChange)="onChangeSelector($event)"></p-dropdown>
+      <p-dropdown [options]="categorias" optionLabel="name" [showClear]="false" placeholder="Filtro" (onChange)="onChangeSelector($event)"
+      [style]="{ 'min-width': '30%'}"  scrollHeight="300px"></p-dropdown>
     </div>
 
     <p-table [value]="aTareas" responsiveLayout="stack" [breakpoint]="'960px'"
             selectionMode="single" dataKey="id"
             [(selection)]="selection" [tableStyle]="{'max-width': '50rem'}">
-        <ng-template pTemplate="header">
+        <ng-template pTemplate="header" >
             <tr>
                 <th style="width: 4rem"></th>
                 <th>Titulo</th>
@@ -74,6 +74,30 @@
 <p-sidebar [(visible)]="resumenTarea" blockScrol="false" [style]="{width: '30vw'}" position="right" >
     <app-info-task [task]="tareaSeleccionada"></app-info-task>
 </p-sidebar>
+
+<!-- Abre el modal de alta de categorias -->
+<p-dialog header="Nueva categoria" [(visible)]="modalCategorias" [maximizable]="false" [style]="{width: '30%', height: '35%'}">
+  <div>
+      <form class="form" [formGroup]="formCategoria" (ngSubmit)="altaCategoria()">
+      <div class="spans">
+        <span class="p-float-label text align center mb-4 mt-4">
+          <input pInputText id="name" formControlName="categoria" required="true"/>
+          <label for="name">Nombre de categoria</label>
+        </span>
+        <span class="p-float-label text align center mb-4 mt-4 flex-1">
+          <input pInputText id="descripcion" formControlName="descipcion_cat" required="true" [style]=" { 'width': '100%' }"/>
+          <label for="name">Descripción de categoria</label>
+        </span>
+      </div>
+
+      <div class="buttons">
+        <button pButton pRipple label="Cancelar" class="p-button font-bold mr-2"  (click)="cancelarAlta()"></button>
+        <button pButton pRipple label="Nueva categoría" class="p-button-success font-bold" type="submit" ></button>
+      </div>
+    </form>
+  </div>
+
+</p-dialog>
 
 <p-toast></p-toast>
 
